@@ -42,20 +42,18 @@ func TestONTID(ctx *testframework.TestFrameworkContext) bool {
 		return false
 	}
 
-	// codeHash, _ := ToCodeHash(c)
-	// ctx.LogError("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR:%x", codeHash)
-	// call the contract
 	pk := ctx.OntClient.Account1.PublicKey
 	encodedPubKey, _ := pk.EncodePoint(true)
 
 	params := []interface{}{"CreateIdentityByPublicKey", []interface{}{[]byte{0x02, 0x01, 0x02},
 		encodedPubKey}}
+
 	res, err := ctx.Ont.InvokeSmartContract(
 		ctx.OntClient.Account1,
 		code,
 		params,
 	)
-	ctx.LogError("pkkkkkkkkkkkkkkkkkkkkkkkkkkkkk %x", encodedPubKey)
+
 	if err != nil {
 		ctx.LogError("TestONTID InvokeSmartContract error:%s", err)
 		return false
