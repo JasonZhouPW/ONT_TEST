@@ -22,8 +22,8 @@ var (
 )
 
 func init() {
-	flag.StringVar(&ONTJsonRpcAddress, "rpc", "http://localhost:11336", "The address of dna jsonrpc")
-	flag.StringVar(&ONTWSAddress, "ws", "ws://localhost:11335", "The address of dna web socket")
+	flag.StringVar(&ONTJsonRpcAddress, "rpc", "http://localhost:20336", "The address of dna jsonrpc")
+	flag.StringVar(&ONTWSAddress, "ws", "ws://localhost:20335", "The address of dna web socket")
 	flag.BoolVar(&CycleTestMode, "c", false, "Is cycle test mode")
 	flag.IntVar(&CycleTestInterval, "ci", 10, "Interval between test in cycle mode")
 	flag.BoolVar(&BenchTestMode, "b", false, "Is benchmark test mode")
