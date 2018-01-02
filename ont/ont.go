@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/ONT_TEST/utils"
 	"github.com/Ontology/account"
 	. "github.com/Ontology/common"
@@ -30,8 +31,6 @@ import (
 	"strings"
 	"sync/atomic"
 	"time"
-
-	"fmt"
 )
 
 func init() {
@@ -246,7 +245,7 @@ func (this *Ontology) SignTransaction(tx *transaction.Transaction, signers []*ac
 	}
 
 	for _, signer := range signers {
-		signature, err := signature.SignBySigner(tx, signer)
+		sig, err := signature.SignBySigner(tx, signer)
 		if err != nil {
 			return fmt.Errorf("SignBySigner error:%s", err)
 		}
@@ -255,7 +254,7 @@ func (this *Ontology) SignTransaction(tx *transaction.Transaction, signers []*ac
 			return fmt.Errorf("CreateSignatureContract error:%s", err)
 		}
 
-		err = ctx.AddContract(transactionContract, signer.PubKey(), signature)
+		err = ctx.AddContract(transactionContract, signer.PubKey(), sig)
 		if err != nil {
 			return fmt.Errorf("AddContract error:%s", err)
 		}
@@ -297,11 +296,11 @@ func (this *Ontology) MultiSignTransaction(owner *account.Account, m int, signer
 	pubKeys := make([]*crypto.PubKey, 0, len(signers))
 	signatures := make([][]byte, 0, len(signers))
 	for _, signer := range signers {
-		signature, err := signature.SignBySigner(tx, signer)
+		sig, err := signature.SignBySigner(tx, signer)
 		if err != nil {
 			return fmt.Errorf("SignBySigner error:%s", err)
 		}
-		signatures = append(signatures, signature)
+		signatures = append(signatures, sig)
 		pubKeys = append(pubKeys, signer.PubKey())
 	}
 	transactionContract, err := contract.CreateMultiSigContract(owner.ProgramHash, m, pubKeys)
@@ -316,8 +315,8 @@ func (this *Ontology) MultiSignTransaction(owner *account.Account, m int, signer
 	if err != nil {
 		return fmt.Errorf("NewContractContext error:%s", err)
 	}
-	for _, signature := range signatures {
-		err = ctx.AddContract(transactionContract, owner.PubKey(), signature)
+	for _, sig := range signatures {
+		err = ctx.AddContract(transactionContract, owner.PubKey(), sig)
 		if err != nil {
 			return fmt.Errorf("AddContract error:%s", err)
 		}
@@ -365,7 +364,7 @@ func (this *Ontology) GetTransactionProgramHashes(tx *transaction.Transaction) (
 		if err != nil {
 			return nil, fmt.Errorf("GetMergedAssetIDValueFromOutputs error:%s", err)
 		}
-		for k, _ := range result {
+		for k := range result {
 			regTx, err := this.GetTransaction(k)
 			if err != nil {
 				return nil, fmt.Errorf("GetTransaction TxHash:%x error:%s", k, err)
@@ -387,7 +386,7 @@ func (this *Ontology) GetTransactionProgramHashes(tx *transaction.Transaction) (
 	for _, v := range hashs {
 		uniq[v] = true
 	}
-	for k, _ := range uniq {
+	for k := range uniq {
 		uniqHashes = append(uniqHashes, k)
 	}
 	sort.Sort(ByProgramHashes(uniqHashes))
@@ -519,8 +518,8 @@ func (this *Ontology) GetAccountsProgramHash(owner *account.Account, m int, acco
 		return Uint160{}, fmt.Errorf("m:%v should not larger then count of accounts:%v", m, len(accounts))
 	}
 	pubKeys := make([]*crypto.PubKey, 0, len(accounts))
-	for _, account := range accounts {
-		pubKeys = append(pubKeys, account.PubKey())
+	for _, ac := range accounts {
+		pubKeys = append(pubKeys, ac.PubKey())
 	}
 	ctr, err := contract.CreateMultiSigContract(owner.ProgramHash, m, pubKeys)
 	if err != nil {
@@ -554,13 +553,13 @@ func (this *Ontology) GetTransactionReference(tx *transaction.Transaction) (map[
 	//UTXO input /  Outputs
 	reference := make(map[*utxo.UTXOTxInput]*utxo.TxOutput)
 	// Key index，v UTXOInput
-	for _, utxo := range tx.UTXOInputs {
-		referTx, err := this.GetTransaction(utxo.ReferTxID)
+	for _, item := range tx.UTXOInputs {
+		referTx, err := this.GetTransaction(item.ReferTxID)
 		if err != nil {
-			return nil, fmt.Errorf("GetTransaction refer txHash:%x", utxo.ReferTxID)
+			return nil, fmt.Errorf("GetTransaction refer txHash:%x", item.ReferTxID)
 		}
-		index := utxo.ReferTxOutputIndex
-		reference[utxo] = referTx.Outputs[index]
+		index := item.ReferTxOutputIndex
+		reference[item] = referTx.Outputs[index]
 	}
 	return reference, nil
 
@@ -808,7 +807,7 @@ func (this *Ontology) InvokeSmartContract(
 }
 
 func (this *Ontology) WSSendTransaction(ws *utils.WebSocketClient, signer *account.Account, tx *transaction.Transaction) error {
-	tx.Attributes = []*transaction.TxAttribute{&transaction.TxAttribute{Usage: transaction.Script, Data: signer.ProgramHash.ToArray()}}
+	tx.Attributes = []*transaction.TxAttribute{{Usage: transaction.Script, Data: signer.ProgramHash.ToArray()}}
 	err := this.SignTransaction(tx, []*account.Account{signer})
 	if err != nil {
 		return fmt.Errorf("SignTransaction error:%s", err)
