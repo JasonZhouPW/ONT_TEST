@@ -5,5 +5,6 @@ import (
 )
 
 func TestOntDEx(){
-	TFramework.RegTestCase("TestDexP2P", TestDexP2P)
+	//TFramework.RegTestCase("TestDexFund", TestDexFund)
+	TFramework.RegTestCase("TestDexProto", TestDexProto)
 }

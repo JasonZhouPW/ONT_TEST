@@ -10,7 +10,8 @@ import (
 	//"github.com/ONT_TEST/testcase/smartcontract/api/attribute"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/input"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/blockchain"
-	"github.com/ONT_TEST/testcase/smartcontract/api/account"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/account"
+	"github.com/ONT_TEST/testcase/smartcontract/api/sys"
 )
 
 func TestAPI() {
@@ -39,7 +40,7 @@ func TestAPI() {
 	//TFramework.RegTestCase("TestGetBlockTransaction", block.TestGetBlockTransaction)
 
 	//account
-	TFramework.RegTestCase("TestGetBalance", account.TestGetBalance)
+	//TFramework.RegTestCase("TestGetBalance", account.TestGetBalance)
 	//TFramework.RegTestCase("TestGetScriptHash", account.TestGetScriptHash)
 
 	//asset
@@ -57,7 +58,8 @@ func TestAPI() {
 	//inputs
 	//TFramework.RegTestCase("TestGetInputHash", input.TestGetInputHash)
 
-
+	//triggetype
+	TFramework.RegTestCase("TestTriggerType",sys.TestTriggerType)
 
 }
 
