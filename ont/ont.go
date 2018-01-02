@@ -1,12 +1,11 @@
 package ont
 
 import (
-	"github.com/ONT_TEST/utils"
 	"bytes"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
-	"fmt"
+	"github.com/ONT_TEST/utils"
 	"github.com/Ontology/account"
 	. "github.com/Ontology/common"
 	"github.com/Ontology/core/asset"
@@ -31,6 +30,8 @@ import (
 	"strings"
 	"sync/atomic"
 	"time"
+
+	"fmt"
 )
 
 func init() {
@@ -651,7 +652,6 @@ func (this *Ontology) DeploySmartContract(
 	smartContractDesc string,
 	smartContractVMType types.VmType) (Uint256, error) {
 
-
 	c, err := hex.DecodeString(smartContractCode)
 	if err != nil {
 		return Uint256{}, fmt.Errorf("hex.DecodeString code:%s error:%s", smartContractCode, err)
@@ -683,7 +683,7 @@ func (this *Ontology) DeploySmartContract(
 	return txHash, nil
 }
 
-func (this *Ontology) buildSmartContractParamInter(builder *neovm.ParamsBuilder, smartContractParams []interface{}) error{
+func (this *Ontology) buildSmartContractParamInter(builder *neovm.ParamsBuilder, smartContractParams []interface{}) error {
 	//虚拟机参数入栈时会反序
 	for i := len(smartContractParams) - 1; i >= 0; i-- {
 		switch v := smartContractParams[i].(type) {
@@ -722,7 +722,7 @@ func (this *Ontology) buildSmartContractParamInter(builder *neovm.ParamsBuilder,
 	return nil
 }
 
-func (this *Ontology) BuildSmartContractParam(smartContractParams []interface{})([]byte, error){
+func (this *Ontology) BuildSmartContractParam(smartContractParams []interface{}) ([]byte, error) {
 	builder := neovm.NewParamsBuilder(new(bytes.Buffer))
 	err := this.buildSmartContractParamInter(builder, smartContractParams)
 	if err != nil {
@@ -744,15 +744,24 @@ func (this *Ontology) InvokeSmartContract(
 	if err != nil {
 		return nil, fmt.Errorf("ToCodeHash Code:%x error:%s", c, err)
 	}
-	/*
+	fmt.Printf("code hashhhhhhhhhhhhhhhhhhhh%x\n", codeHash)
 	param, err := this.BuildSmartContractParam(smartContractParams)
 	if err != nil {
 		return nil, err
 	}
-	*/
-	codess := `00c56b6161650d00616165110161616c756653c56b61210325cd49308850b7f2f105749dbd9443c59ece2a234402c722ef34fbf1b32644a76c766b00527ac452c56c766b52527ac46c766b52c3000403010203c46c766b52c3516c766b00c3c46c766b52c36c766b51527ac4194372656174654964656e7469747942795075626c69634b65796c766b51c3617c67cf601e15262074276d9934f96255905d69b7e3fe75616c756654c56b61030201026c766b00527ac452c56c766b52527ac46c766b52c3000201bdc46c766b52c3516c766b00c3c46c766b52c36c766b51527ac4184372656174654964656e746974794279477561726469616e6c766b51c3617c67cf601e15262074276d9934f96255905d69b7e3fe75616c756655c56b61210325cd49308850b7f2f105749dbd9443c59ece2a234402c722ef34fbf1b32644a76c766b00527ac421025b44006189f04a0ee194bb7474ecdccc0f08adfa0f772274b611c678b393e0386c766b51527ac404030102036c766b52527ac453c56c766b54527ac46c766b54c3006c766b52c3c46c766b54c3516c766b51c3c46c766b54c3526c766b00c3c46c766b54c36c766b53527ac40a4164644b65794279506b6c766b53c3617c67cf601e15262074276d9934f96255905d69b7e3fe75616c756655c56b61210325cd49308850b7f2f105749dbd9443c59ece2a234402c722ef34fbf1b32644a76c766b00527ac421025b44006189f04a0ee194bb7474ecdccc0f08adfa0f772274b611c678b393e0386c766b51527ac404030102036c766b52527ac453c56c766b54527ac46c766b54c3006c766b52c3c46c766b54c3516c766b51c3c46c766b54c3526c766b00c3c46c766b54c36c766b53527ac40a4164644b65794279506b6c766b53c3617c67cf601e15262074276d9934f96255905d69b7e3fe75616c756657c56b61210325cd49308850b7f2f105749dbd9443c59ece2a234402c722ef34fbf1b32644a76c766b00527ac4030201026c766b51527ac404617574686c766b52527ac4046a736f6e6c766b53527ac4347b22736f6369616c223a207b2273657276696365223a202274776974746572222c20226e616d65223a2022616c69636522207d7d6c766b54527ac455c56c766b56527ac46c766b56c3006c766b51c3c46c766b56c3516c766b52c3c46c766b56c3526c766b53c3c46c766b56c3536c766b54c3c46c766b56c3546c766b00c3c46c766b56c36c766b55527ac40c4164644174747269627574656c766b55c3617c67cf601e15262074276d9934f96255905d69b7e3fe75616c7566`
-	bs, _ := HexToBytes(codess)
-	tx, err := this.NewInvokeTransaction(bs, codeHash)
+
+	// params := `00c56b6161650d00616165110161616c756653c56b61210325cd49308850b7f2f105749dbd9443c59ece2a234402c722ef34fbf1b32644a76c766b00527ac452c56c766b52527ac46c766b52c3000403010203c46c766b52c3516c766b00c3c46c766b52c36c766b51527ac4194372656174654964656e7469747942795075626c69634b65796c766b51c3617c67cf601e15262074276d9934f96255905d69b7e3fe75616c756654c56b61030201026c766b00527ac452c56c766b52527ac46c766b52c3000201bdc46c766b52c3516c766b00c3c46c766b52c36c766b51527ac4184372656174654964656e746974794279477561726469616e6c766b51c3617c67cf601e15262074276d9934f96255905d69b7e3fe75616c756655c56b61210325cd49308850b7f2f105749dbd9443c59ece2a234402c722ef34fbf1b32644a76c766b00527ac421025b44006189f04a0ee194bb7474ecdccc0f08adfa0f772274b611c678b393e0386c766b51527ac404030102036c766b52527ac453c56c766b54527ac46c766b54c3006c766b52c3c46c766b54c3516c766b51c3c46c766b54c3526c766b00c3c46c766b54c36c766b53527ac40a4164644b65794279506b6c766b53c3617c67cf601e15262074276d9934f96255905d69b7e3fe75616c756655c56b61210325cd49308850b7f2f105749dbd9443c59ece2a234402c722ef34fbf1b32644a76c766b00527ac421025b44006189f04a0ee194bb7474ecdccc0f08adfa0f772274b611c678b393e0386c766b51527ac404030102036c766b52527ac453c56c766b54527ac46c766b54c3006c766b52c3c46c766b54c3516c766b51c3c46c766b54c3526c766b00c3c46c766b54c36c766b53527ac40a4164644b65794279506b6c766b53c3617c67cf601e15262074276d9934f96255905d69b7e3fe75616c756657c56b61210325cd49308850b7f2f105749dbd9443c59ece2a234402c722ef34fbf1b32644a76c766b00527ac4030201026c766b51527ac404617574686c766b52527ac4046a736f6e6c766b53527ac4347b22736f6369616c223a207b2273657276696365223a202274776974746572222c20226e616d65223a2022616c69636522207d7d6c766b54527ac455c56c766b56527ac46c766b56c3006c766b51c3c46c766b56c3516c766b52c3c46c766b56c3526c766b53c3c46c766b56c3536c766b54c3c46c766b56c3546c766b00c3c46c766b56c36c766b55527ac40c4164644174747269627574656c766b55c3617c67cf601e15262074276d9934f96255905d69b7e3fe75616c7566`
+
+	// params = strings.Replace(params, "cf601e15262074276d9934f96255905d69b7e3fe", fmt.Sprintf("%x", codeHash), -1)
+	// pk := account.PublicKey
+	// pkbs := bytes.NewBuffer(nil)
+	// pk.Serialize(pkbs)
+	// params = strings.Replace(params, `0325cd49308850b7f2f105749dbd9443c59ece2a234402c722ef34fbf1b32644a7`, fmt.Sprintf("%x", pkbs.Bytes()), -1)
+
+	// fmt.Println("HHHHHHHHHHHHHHHHHHHHHHHHHHH ", params)
+
+	// bs, _ := HexToBytes(params)
+	tx, err := this.NewInvokeTransaction(param, codeHash)
 	if err != nil {
 		return nil, fmt.Errorf("NewInvokeTransaction error:%s", err)
 	}
@@ -809,6 +818,10 @@ func (this *Ontology) InvokeSmartContract(
 }
 
 func (this *Ontology) WSSendTransaction(ws *utils.WebSocketClient, signer *account.Account, tx *transaction.Transaction) error {
+	// ToHexString(signer.ProgramHash.ToArray())
+	fmt.Printf("jjjjjjjjjjjjjjjjjjjjjjjjjjjjj %x", signer.ProgramHash)
+
+	tx.Attributes = []*transaction.TxAttribute{&transaction.TxAttribute{Usage: transaction.Script, Data: signer.ProgramHash.ToArray()}}
 	err := this.SignTransaction(tx, []*account.Account{signer})
 	if err != nil {
 		return fmt.Errorf("SignTransaction error:%s", err)
