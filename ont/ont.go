@@ -567,7 +567,7 @@ func (this *Ontology) GetTransactionReference(tx *transaction.Transaction) (map[
 func (this *Ontology) sendRpcRequest(method string, params []interface{}) ([]byte, error) {
 	data, err := this.Call(this.getRpcAddress(), method, this.getQid(), params)
 	if method == ONT_RPC_SENDTRANSACTION {
-		log4.Debug("Call:%s params:%+v", method, params)
+		//log4.Debug("Call:%s params:%+v", method, params)
 		log4.Debug("Res:%s", data)
 	}
 	if err != nil {
@@ -656,7 +656,6 @@ func (this *Ontology) DeploySmartContract(
 	if err != nil {
 		return Uint256{}, fmt.Errorf("hex.DecodeString code:%s error:%s", smartContractCode, err)
 	}
-	fmt.Println("code:", smartContractCode, c)
 	fc := &code.FunctionCode{
 		Code:           c,
 		ParameterTypes: smartContractParams,
@@ -744,6 +743,7 @@ func (this *Ontology) InvokeSmartContract(
 	if err != nil {
 		return nil, fmt.Errorf("ToCodeHash Code:%x error:%s", c, err)
 	}
+	fmt.Printf("SmartContract CodeHash: %x\n", codeHash)
 	param, err := this.BuildSmartContractParam(smartContractParams)
 	if err != nil {
 		return nil, err
