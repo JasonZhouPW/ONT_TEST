@@ -7,3 +7,21 @@
 [2017/12/28 16:12:43 CST] [INFO] ---------------------------------------------------------------
 [2017/12/28 16:12:43 CST] [DEBG] Call:sendrawtransaction params:[d0000800c56b51616c7566000100000b54657374426f6f6c65616e03312e3000000001001335343230313431313736333132323134323937000000]
 [2017/12/28 16:12:43 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"4076a6245d6be50129cb6943e794423f1423ef5f1be9e5383efcb79169320d9f"}
+[2018/01/02 16:40:15 CST] [INFO] 			===============================================================
+[2018/01/02 16:40:15 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 16:40:15 CST] [INFO] 			===============================================================
+[2018/01/02 16:40:15 CST] [INFO] 
+[2018/01/02 16:40:15 CST] [INFO] ===============================================================
+[2018/01/02 16:40:15 CST] [INFO] 1. Start TestCase:TestTriggerType
+[2018/01/02 16:40:15 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 16:40:17 CST] [DEBG] Res:
+[2018/01/02 16:40:17 CST] [EROR] TestTriggerType DeploySmartContract error:SendTransaction tx:&{TxType:208 PayloadVersion:0 Payload:0xc0420802a0 Attributes:[0xc0420690b0] UTXOInputs:[] BalanceInputs:[] Outputs:[] Programs:[] AssetOutputs:map[] AssetInputAmount:map[] AssetOutputAmount:map[] hash:<nil>} error:Call sendrawtransaction error:Post http://localhost:11336: dial tcp [::1]:11336: connectex: No connection could be made because the target machine actively refused it.
+[2018/01/02 16:40:17 CST] [INFO] TestCase:TestTriggerType failed.
+[2018/01/02 16:40:17 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 16:40:17 CST] [INFO] 
+[2018/01/02 16:40:17 CST] [INFO] 		===============================================================
+[2018/01/02 16:40:17 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:2.02 s.
+[2018/01/02 16:40:17 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 16:40:17 CST] [INFO] 			Fail list:
+[2018/01/02 16:40:17 CST] [INFO] 			1.	TestTriggerType
+[2018/01/02 16:40:17 CST] [INFO] 		===============================================================

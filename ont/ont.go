@@ -1,12 +1,11 @@
 package ont
 
 import (
-	"github.com/ONT_TEST/utils"
 	"bytes"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
-	"fmt"
+	"github.com/ONT_TEST/utils"
 	"github.com/Ontology/account"
 	. "github.com/Ontology/common"
 	"github.com/Ontology/core/asset"
@@ -31,6 +30,8 @@ import (
 	"strings"
 	"sync/atomic"
 	"time"
+
+	"fmt"
 )
 
 func init() {
@@ -651,11 +652,11 @@ func (this *Ontology) DeploySmartContract(
 	smartContractDesc string,
 	smartContractVMType types.VmType) (Uint256, error) {
 
-
 	c, err := hex.DecodeString(smartContractCode)
 	if err != nil {
 		return Uint256{}, fmt.Errorf("hex.DecodeString code:%s error:%s", smartContractCode, err)
 	}
+	//fmt.Println("code:", smartContractCode, c)
 	fc := &code.FunctionCode{
 		Code:           c,
 		ParameterTypes: smartContractParams,
@@ -682,7 +683,7 @@ func (this *Ontology) DeploySmartContract(
 	return txHash, nil
 }
 
-func (this *Ontology) buildSmartContractParamInter(builder *neovm.ParamsBuilder, smartContractParams []interface{}) error{
+func (this *Ontology) buildSmartContractParamInter(builder *neovm.ParamsBuilder, smartContractParams []interface{}) error {
 	//虚拟机参数入栈时会反序
 	for i := len(smartContractParams) - 1; i >= 0; i-- {
 		switch v := smartContractParams[i].(type) {
@@ -721,7 +722,7 @@ func (this *Ontology) buildSmartContractParamInter(builder *neovm.ParamsBuilder,
 	return nil
 }
 
-func (this *Ontology) BuildSmartContractParam(smartContractParams []interface{})([]byte, error){
+func (this *Ontology) BuildSmartContractParam(smartContractParams []interface{}) ([]byte, error) {
 	builder := neovm.NewParamsBuilder(new(bytes.Buffer))
 	err := this.buildSmartContractParamInter(builder, smartContractParams)
 	if err != nil {
@@ -743,15 +744,17 @@ func (this *Ontology) InvokeSmartContract(
 	if err != nil {
 		return nil, fmt.Errorf("ToCodeHash Code:%x error:%s", c, err)
 	}
-	fmt.Printf("SmartContract CodeHash: %x\n", codeHash)
+
 	param, err := this.BuildSmartContractParam(smartContractParams)
 	if err != nil {
 		return nil, err
 	}
+
 	tx, err := this.NewInvokeTransaction(param, codeHash)
 	if err != nil {
 		return nil, fmt.Errorf("NewInvokeTransaction error:%s", err)
 	}
+
 	wsClient := utils.NewWebSocketClient(this.getWSAddress())
 	recvCh, err := wsClient.Connet()
 	if err != nil {
@@ -805,6 +808,7 @@ func (this *Ontology) InvokeSmartContract(
 }
 
 func (this *Ontology) WSSendTransaction(ws *utils.WebSocketClient, signer *account.Account, tx *transaction.Transaction) error {
+	tx.Attributes = []*transaction.TxAttribute{&transaction.TxAttribute{Usage: transaction.Script, Data: signer.ProgramHash.ToArray()}}
 	err := this.SignTransaction(tx, []*account.Account{signer})
 	if err != nil {
 		return fmt.Errorf("SignTransaction error:%s", err)
@@ -822,6 +826,7 @@ func (this *Ontology) WSSendTransaction(ws *utils.WebSocketClient, signer *accou
 		"Action": ONT_SENDTRANSACTION,
 		"Data":   txData,
 	}
+
 	data, err := json.Marshal(req)
 	if err != nil {
 		return fmt.Errorf("json.Marshal Req:%+v error:%s", req, err)
