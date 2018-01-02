@@ -40,6 +40,11 @@ func TestTriggerType(ctx *TestFrameworkContext)bool{
 		ctx.LogError("TestTriggerType error:%s", err)
 		return false
 	}
+	err = ctx.AssertToInt(res, 1)
+	if err != nil {
+		ctx.LogError("TestTriggerType res AssertToInt error:%s", err)
+		return false
+	}
 	ctx.LogInfo("TestTriggerType type:%d", int(res.(float64)))
 	return true
 }

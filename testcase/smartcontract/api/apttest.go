@@ -60,6 +60,7 @@ func TestAPI() {
 
 	//triggetype
 	TFramework.RegTestCase("TestTriggerType",sys.TestTriggerType)
+	TFramework.RegTestCase("TestCallContractStatic",sys.TestCallContractStatic)
 
 }
 
