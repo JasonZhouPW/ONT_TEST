@@ -12,6 +12,7 @@ import (
 	//"github.com/ONT_TEST/testcase/smartcontract/deployinvoke"
 	//"github.com/ONT_TEST/testcase/ont_dex"
 	"github.com/ONT_TEST/testcase/ontid"
+	//"github.com/ONT_TEST/testcase/smartcontract/api"
 )
 
 func init() {

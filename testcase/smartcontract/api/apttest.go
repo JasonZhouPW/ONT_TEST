@@ -44,6 +44,7 @@ func TestAPI() {
 	//TFramework.RegTestCase("TestGetScriptHash", account.TestGetScriptHash)
 
 	//asset
+	//TFramework.RegTestCase("TestAssetCreate", asset.TestAssetCreate)
 	//TFramework.RegTestCase("TestGetAdmin", asset.TestGetAdmin)
 	//TFramework.RegTestCase("TestGetAmount", asset.TestGetAmount)
 	//TFramework.RegTestCase("TestGetAssetId", asset.TestGetAssetId)
@@ -59,7 +60,8 @@ func TestAPI() {
 	//TFramework.RegTestCase("TestGetInputHash", input.TestGetInputHash)
 
 	//triggetype
-	TFramework.RegTestCase("TestTriggerType",sys.TestTriggerType)
+	//TFramework.RegTestCase("TestTriggerType",sys.TestTriggerType)
+	//TFramework.RegTestCase("TestTriggerType",sys.TestTriggerType)
 	TFramework.RegTestCase("TestCallContractStatic",sys.TestCallContractStatic)
 
 }

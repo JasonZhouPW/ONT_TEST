@@ -10,7 +10,8 @@ import (
 
 func TestCallContractStatic(ctx *TestFrameworkContext) bool {
 	codeA := "52c56b6c766b00527ac4616c766b00c36c766b51527ac46203006c766b51c3616c7566"
-	codeHash, err := common.ToCodeHash([]byte(codeA))
+	codeb, _ := common.HexToBytes(codeA)
+	codeHash, err := common.ToCodeHash(codeb)
 	if err != nil {
 		ctx.LogError("TestCallContractStatic ToCodeHash error:%s", err)
 		return false
