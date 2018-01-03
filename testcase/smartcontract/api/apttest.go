@@ -6,12 +6,12 @@ import (
 	//"github.com/ONT_TEST/testcase/smartcontract/api/block"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/block"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/account"
-	//"github.com/ONT_TEST/testcase/smartcontract/api/asset"
+	"github.com/ONT_TEST/testcase/smartcontract/api/asset"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/attribute"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/input"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/blockchain"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/account"
-	"github.com/ONT_TEST/testcase/smartcontract/api/sys"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/sys"
 )
 
 func TestAPI() {
@@ -44,6 +44,7 @@ func TestAPI() {
 	//TFramework.RegTestCase("TestGetScriptHash", account.TestGetScriptHash)
 
 	//asset
+	//TFramework.RegTestCase("TestAssetCreate", asset.TestAssetCreate)
 	//TFramework.RegTestCase("TestGetAdmin", asset.TestGetAdmin)
 	//TFramework.RegTestCase("TestGetAmount", asset.TestGetAmount)
 	//TFramework.RegTestCase("TestGetAssetId", asset.TestGetAssetId)
@@ -59,7 +60,7 @@ func TestAPI() {
 	//TFramework.RegTestCase("TestGetInputHash", input.TestGetInputHash)
 
 	//triggetype
-	TFramework.RegTestCase("TestTriggerType",sys.TestTriggerType)
+	//TFramework.RegTestCase("TestTriggerType",sys.TestTriggerType)
 
 }
 
