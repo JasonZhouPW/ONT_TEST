@@ -25,3 +25,447 @@
 [2018/01/02 16:40:17 CST] [INFO] 			Fail list:
 [2018/01/02 16:40:17 CST] [INFO] 			1.	TestTriggerType
 [2018/01/02 16:40:17 CST] [INFO] 		===============================================================
+[2018/01/02 17:25:30 CST] [INFO] 			===============================================================
+[2018/01/02 17:25:30 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 17:25:30 CST] [INFO] 			===============================================================
+[2018/01/02 17:25:30 CST] [INFO] 
+[2018/01/02 17:25:30 CST] [INFO] ===============================================================
+[2018/01/02 17:25:30 CST] [INFO] 1. Start TestCase:TestTriggerType
+[2018/01/02 17:25:30 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:25:32 CST] [DEBG] Res:
+[2018/01/02 17:25:32 CST] [EROR] TestTriggerType DeploySmartContract error:SendTransaction tx:&{TxType:208 PayloadVersion:0 Payload:0xc04203e420 Attributes:[0xc042067620] UTXOInputs:[] BalanceInputs:[] Outputs:[] Programs:[] AssetOutputs:map[] AssetInputAmount:map[] AssetOutputAmount:map[] hash:<nil>} error:Call sendrawtransaction error:Post http://localhost:20336: dial tcp [::1]:20336: connectex: No connection could be made because the target machine actively refused it.
+[2018/01/02 17:25:32 CST] [INFO] TestCase:TestTriggerType failed.
+[2018/01/02 17:25:32 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:25:32 CST] [INFO] 
+[2018/01/02 17:25:32 CST] [INFO] 		===============================================================
+[2018/01/02 17:25:32 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:2.01 s.
+[2018/01/02 17:25:32 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 17:25:32 CST] [INFO] 			Fail list:
+[2018/01/02 17:25:32 CST] [INFO] 			1.	TestTriggerType
+[2018/01/02 17:25:32 CST] [INFO] 		===============================================================
+[2018/01/02 17:27:21 CST] [INFO] 			===============================================================
+[2018/01/02 17:27:21 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 17:27:21 CST] [INFO] 			===============================================================
+[2018/01/02 17:27:21 CST] [INFO] 
+[2018/01/02 17:27:21 CST] [INFO] ===============================================================
+[2018/01/02 17:27:21 CST] [INFO] 1. Start TestCase:TestTriggerType
+[2018/01/02 17:27:21 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:27:21 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"f135c50125535fc3cf29626c5408485d73608060372dcbe5b452056a210cec14"}
+[2018/01/02 17:27:27 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"ccd76ab2202342fb1ef1cb045633b3b2ffb00f32154f38ac8e57eada3cc020b3","Version":"1.0.0"}
+[2018/01/02 17:27:33 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":4,"Version":"1.0.0"}
+[2018/01/02 17:27:33 CST] [INFO] TestTriggerType type:4
+[2018/01/02 17:27:33 CST] [INFO] TestCase:TestTriggerType success.
+[2018/01/02 17:27:33 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:27:33 CST] [INFO] 
+[2018/01/02 17:27:33 CST] [INFO] 		===============================================================
+[2018/01/02 17:27:33 CST] [INFO] 		DNA Test Finish Total:1 Success:1 Failed:0 Skip:0 TimeCost:11.26 s.
+[2018/01/02 17:27:33 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 17:27:33 CST] [INFO] 			Success list:
+[2018/01/02 17:27:33 CST] [INFO] 			1.	TestTriggerType
+[2018/01/02 17:27:33 CST] [INFO] 		===============================================================
+[2018/01/02 17:35:47 CST] [INFO] 			===============================================================
+[2018/01/02 17:35:47 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 17:35:47 CST] [INFO] 			===============================================================
+[2018/01/02 17:35:47 CST] [INFO] 
+[2018/01/02 17:35:47 CST] [INFO] ===============================================================
+[2018/01/02 17:35:47 CST] [INFO] 1. Start TestCase:TestTriggerType
+[2018/01/02 17:35:47 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:35:47 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"5166eddeb25f99290b09792675c596a1db56a5a68b3b7e123c3a19c4c51a1b30"}
+[2018/01/02 17:35:51 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"979200d512c55339f79b93d32071d48dd5cc34dc212f7ab3a2ad0278f8a4d68b","Version":"1.0.0"}
+[2018/01/02 17:35:57 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":4,"Version":"1.0.0"}
+[2018/01/02 17:35:57 CST] [INFO] TestTriggerType type:4
+[2018/01/02 17:35:57 CST] [INFO] TestCase:TestTriggerType success.
+[2018/01/02 17:35:57 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:35:57 CST] [INFO] 
+[2018/01/02 17:35:57 CST] [INFO] 		===============================================================
+[2018/01/02 17:35:57 CST] [INFO] 		DNA Test Finish Total:1 Success:1 Failed:0 Skip:0 TimeCost:9.96 s.
+[2018/01/02 17:35:57 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 17:35:57 CST] [INFO] 			Success list:
+[2018/01/02 17:35:57 CST] [INFO] 			1.	TestTriggerType
+[2018/01/02 17:35:57 CST] [INFO] 		===============================================================
+[2018/01/02 17:47:27 CST] [INFO] 			===============================================================
+[2018/01/02 17:47:27 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 17:47:27 CST] [INFO] 			===============================================================
+[2018/01/02 17:47:27 CST] [INFO] 
+[2018/01/02 17:47:27 CST] [INFO] ===============================================================
+[2018/01/02 17:47:27 CST] [INFO] 1. Start TestCase:TestTriggerType
+[2018/01/02 17:47:27 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:47:27 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"5b6a6a481059c3417ce4c9524b9fbdcccd59e47369142987792f275de22fbc4d"}
+[2018/01/02 17:47:32 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"8fd3341df376a5c7445ffe4d0a39f4084d932bbca77a84a5975f62c349613da0","Version":"1.0.0"}
+[2018/01/02 17:47:37 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":1,"Version":"1.0.0"}
+[2018/01/02 17:47:37 CST] [INFO] TestTriggerType type:1
+[2018/01/02 17:47:37 CST] [INFO] TestCase:TestTriggerType success.
+[2018/01/02 17:47:37 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:47:37 CST] [INFO] 
+[2018/01/02 17:47:37 CST] [INFO] 		===============================================================
+[2018/01/02 17:47:37 CST] [INFO] 		DNA Test Finish Total:1 Success:1 Failed:0 Skip:0 TimeCost:10.23 s.
+[2018/01/02 17:47:37 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 17:47:37 CST] [INFO] 			Success list:
+[2018/01/02 17:47:37 CST] [INFO] 			1.	TestTriggerType
+[2018/01/02 17:47:37 CST] [INFO] 		===============================================================
+[2018/01/02 17:54:49 CST] [INFO] 			===============================================================
+[2018/01/02 17:54:49 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 17:54:49 CST] [INFO] 			===============================================================
+[2018/01/02 17:54:49 CST] [INFO] 
+[2018/01/02 17:54:49 CST] [INFO] ===============================================================
+[2018/01/02 17:54:49 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/02 17:54:49 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:54:49 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"237fc2018eef4939bded57d9b285f2d04cc88b7ba4863352516878aac06af2cf"}
+[2018/01/02 17:55:01 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"f0f8be932ecf6c73f9625e2097afb9619516490dc187131d7d55e82f51dddc6e","Version":"1.0.0"}
+[2018/01/02 17:55:07 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SMARTCODE EXEC ERROR","Error":47001,"Result":{},"Version":"1.0.0"}
+[2018/01/02 17:55:07 CST] [EROR] TestONTID InvokeSmartContract error:InvokeSmartContract failed. Error:47001 Desc:SMARTCODE EXEC ERROR Res:map[]
+[2018/01/02 17:55:07 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/02 17:55:07 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:55:07 CST] [INFO] 
+[2018/01/02 17:55:07 CST] [INFO] 		===============================================================
+[2018/01/02 17:55:07 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:17.78 s.
+[2018/01/02 17:55:07 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 17:55:07 CST] [INFO] 			Fail list:
+[2018/01/02 17:55:07 CST] [INFO] 			1.	TestONTID
+[2018/01/02 17:55:07 CST] [INFO] 		===============================================================
+[2018/01/02 17:58:05 CST] [INFO] 			===============================================================
+[2018/01/02 17:58:05 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 17:58:05 CST] [INFO] 			===============================================================
+[2018/01/02 17:58:05 CST] [INFO] 
+[2018/01/02 17:58:05 CST] [INFO] ===============================================================
+[2018/01/02 17:58:05 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/02 17:58:05 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:58:05 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"67c69b270fbbcbd08a8e93b01d99627fbc79c7e672df116b5ed75fd91b97b912"}
+[2018/01/02 17:58:14 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"70a40f80d364114e272281a9666f7170c2a6ef0ac4401d4443d12b745d695c1c","Version":"1.0.0"}
+[2018/01/02 17:58:19 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":1,"Version":"1.0.0"}
+[2018/01/02 17:58:19 CST] [EROR] TestONTID test failed 1 not equal:2
+[2018/01/02 17:58:19 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/02 17:58:19 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:58:19 CST] [INFO] 
+[2018/01/02 17:58:19 CST] [INFO] 		===============================================================
+[2018/01/02 17:58:19 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:14.25 s.
+[2018/01/02 17:58:19 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 17:58:19 CST] [INFO] 			Fail list:
+[2018/01/02 17:58:19 CST] [INFO] 			1.	TestONTID
+[2018/01/02 17:58:19 CST] [INFO] 		===============================================================
+[2018/01/02 17:59:05 CST] [INFO] 			===============================================================
+[2018/01/02 17:59:05 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 17:59:05 CST] [INFO] 			===============================================================
+[2018/01/02 17:59:05 CST] [INFO] 
+[2018/01/02 17:59:05 CST] [INFO] ===============================================================
+[2018/01/02 17:59:05 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/02 17:59:05 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:59:05 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"19d47e49f90584f8084c2c5c69e706b4ec637c87f60092462e0737a7b6a7727d"}
+[2018/01/02 17:59:13 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"30b4365bd5cd15f431eb50bfba3cb895bc65f926ee42069f5085f414ab3c64bf","Version":"1.0.0"}
+[2018/01/02 17:59:19 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":1,"Version":"1.0.0"}
+[2018/01/02 17:59:19 CST] [EROR] TestONTID test failed 1 not equal:2
+[2018/01/02 17:59:19 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/02 17:59:19 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 17:59:19 CST] [INFO] 
+[2018/01/02 17:59:19 CST] [INFO] 		===============================================================
+[2018/01/02 17:59:19 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:13.65 s.
+[2018/01/02 17:59:19 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 17:59:19 CST] [INFO] 			Fail list:
+[2018/01/02 17:59:19 CST] [INFO] 			1.	TestONTID
+[2018/01/02 17:59:19 CST] [INFO] 		===============================================================
+[2018/01/02 18:09:11 CST] [INFO] 			===============================================================
+[2018/01/02 18:09:11 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 18:09:11 CST] [INFO] 			===============================================================
+[2018/01/02 18:09:11 CST] [INFO] 
+[2018/01/02 18:09:11 CST] [INFO] ===============================================================
+[2018/01/02 18:09:11 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/02 18:09:11 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 18:09:11 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"6e87e1261a6ec242e3ab323c139a010e3870eeb8fd50d387a813bdd08962a221"}
+[2018/01/02 18:09:20 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"f169ea7e3f7d8fa891a972123d26abdba64990fc6ecabb9314d4431e203aa983","Version":"1.0.0"}
+[2018/01/02 18:09:25 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":1,"Version":"1.0.0"}
+[2018/01/02 18:09:25 CST] [EROR] TestONTID test failed 1 not equal:2
+[2018/01/02 18:09:25 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/02 18:09:25 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 18:09:25 CST] [INFO] 
+[2018/01/02 18:09:25 CST] [INFO] 		===============================================================
+[2018/01/02 18:09:25 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:14.27 s.
+[2018/01/02 18:09:25 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 18:09:25 CST] [INFO] 			Fail list:
+[2018/01/02 18:09:25 CST] [INFO] 			1.	TestONTID
+[2018/01/02 18:09:25 CST] [INFO] 		===============================================================
+[2018/01/02 18:11:58 CST] [INFO] 			===============================================================
+[2018/01/02 18:11:58 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 18:11:58 CST] [INFO] 			===============================================================
+[2018/01/02 18:11:58 CST] [INFO] 
+[2018/01/02 18:11:58 CST] [INFO] ===============================================================
+[2018/01/02 18:11:58 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/02 18:11:58 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 18:11:58 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"0a7fba02769b948f346f3ab139253445bc681c41c447b70a47b60d2da5eca139"}
+[2018/01/02 18:12:08 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"49a7da3c47e89e6e02ad4301beb24df8c2c7e4dd2957980b19a46b9b41958c85","Version":"1.0.0"}
+[2018/01/02 18:12:13 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":1,"Version":"1.0.0"}
+[2018/01/02 18:12:13 CST] [EROR] TestONTID test failed 1 not equal:2
+[2018/01/02 18:12:13 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/02 18:12:13 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 18:12:13 CST] [INFO] 
+[2018/01/02 18:12:13 CST] [INFO] 		===============================================================
+[2018/01/02 18:12:13 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:15.35 s.
+[2018/01/02 18:12:13 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 18:12:13 CST] [INFO] 			Fail list:
+[2018/01/02 18:12:13 CST] [INFO] 			1.	TestONTID
+[2018/01/02 18:12:13 CST] [INFO] 		===============================================================
+[2018/01/02 18:23:31 CST] [INFO] 			===============================================================
+[2018/01/02 18:23:31 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 18:23:31 CST] [INFO] 			===============================================================
+[2018/01/02 18:23:31 CST] [INFO] 
+[2018/01/02 18:23:31 CST] [INFO] ===============================================================
+[2018/01/02 18:23:31 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/02 18:23:31 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 18:23:31 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"1975fa6fa262481c17bf42380108f93b9bb4bf2652c5e60225937e8187af3144"}
+[2018/01/02 18:23:41 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"9683d0716eede7c39772ab72b7068a6792e5c427a5dfb774cdc29aaa99757ed0","Version":"1.0.0"}
+[2018/01/02 18:23:47 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":true,"Version":"1.0.0"}
+[2018/01/02 18:23:47 CST] [EROR] TestONTID test failed Assert:true to float failed
+[2018/01/02 18:23:47 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/02 18:23:47 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 18:23:47 CST] [INFO] 
+[2018/01/02 18:23:47 CST] [INFO] 		===============================================================
+[2018/01/02 18:23:47 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:16.07 s.
+[2018/01/02 18:23:47 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 18:23:47 CST] [INFO] 			Fail list:
+[2018/01/02 18:23:47 CST] [INFO] 			1.	TestONTID
+[2018/01/02 18:23:47 CST] [INFO] 		===============================================================
+[2018/01/02 19:09:57 CST] [INFO] 			===============================================================
+[2018/01/02 19:09:57 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 19:09:57 CST] [INFO] 			===============================================================
+[2018/01/02 19:09:57 CST] [INFO] 
+[2018/01/02 19:09:57 CST] [INFO] ===============================================================
+[2018/01/02 19:09:57 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/02 19:09:57 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 19:09:57 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"a033b8f206a9cc77cf2b1b238e1294f77c3cd39c2ac4b5bd568b81a8bfcf9d51"}
+[2018/01/02 19:10:05 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"42b2be0350ea77f3af894723b907e9b7a40098eccead0392d36cde25cbe10c4a","Version":"1.0.0"}
+[2018/01/02 19:10:11 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":true,"Version":"1.0.0"}
+[2018/01/02 19:10:11 CST] [EROR] TestONTID test failed Assert:true to float failed
+[2018/01/02 19:10:11 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/02 19:10:11 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 19:10:11 CST] [INFO] 
+[2018/01/02 19:10:11 CST] [INFO] 		===============================================================
+[2018/01/02 19:10:11 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:13.80 s.
+[2018/01/02 19:10:11 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 19:10:11 CST] [INFO] 			Fail list:
+[2018/01/02 19:10:11 CST] [INFO] 			1.	TestONTID
+[2018/01/02 19:10:11 CST] [INFO] 		===============================================================
+[2018/01/02 19:16:20 CST] [INFO] 			===============================================================
+[2018/01/02 19:16:20 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 19:16:20 CST] [INFO] 			===============================================================
+[2018/01/02 19:16:20 CST] [INFO] 
+[2018/01/02 19:16:20 CST] [INFO] ===============================================================
+[2018/01/02 19:16:20 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/02 19:16:20 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 19:16:20 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"cb2de8752829ea18e3f50ee384cbe5ffda72541aada8aeadc1b77a2fbc3e3abd"}
+[2018/01/02 19:16:32 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"ec881f5a07676c9febc217081d82d60f3b70d32dd7496b4f5d479204a9206517","Version":"1.0.0"}
+[2018/01/02 19:16:38 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":true,"Version":"1.0.0"}
+[2018/01/02 19:16:38 CST] [EROR] TestONTID test failed Assert:true to float failed
+[2018/01/02 19:16:38 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/02 19:16:38 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 19:16:38 CST] [INFO] 
+[2018/01/02 19:16:38 CST] [INFO] 		===============================================================
+[2018/01/02 19:16:38 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:17.35 s.
+[2018/01/02 19:16:38 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 19:16:38 CST] [INFO] 			Fail list:
+[2018/01/02 19:16:38 CST] [INFO] 			1.	TestONTID
+[2018/01/02 19:16:38 CST] [INFO] 		===============================================================
+[2018/01/02 19:36:28 CST] [INFO] 			===============================================================
+[2018/01/02 19:36:28 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/02 19:36:28 CST] [INFO] 			===============================================================
+[2018/01/02 19:36:28 CST] [INFO] 
+[2018/01/02 19:36:28 CST] [INFO] ===============================================================
+[2018/01/02 19:36:28 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/02 19:36:28 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 19:36:28 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"56f584319a4bfa3fab1c5b7a648ae6b8748f4c123d70539b291e30144d8f2089"}
+[2018/01/02 19:36:36 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"bd81e81d7dd3cda6f0950c7fa6561a01251e092707a8b1a1f55829dc53c7c930","Version":"1.0.0"}
+[2018/01/02 19:36:41 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":true,"Version":"1.0.0"}
+[2018/01/02 19:36:41 CST] [EROR] TestONTID test failed Assert:true to float failed
+[2018/01/02 19:36:41 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/02 19:36:41 CST] [INFO] ---------------------------------------------------------------
+[2018/01/02 19:36:41 CST] [INFO] 
+[2018/01/02 19:36:41 CST] [INFO] 		===============================================================
+[2018/01/02 19:36:41 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:13.11 s.
+[2018/01/02 19:36:41 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/02 19:36:41 CST] [INFO] 			Fail list:
+[2018/01/02 19:36:41 CST] [INFO] 			1.	TestONTID
+[2018/01/02 19:36:41 CST] [INFO] 		===============================================================
+[2018/01/03 10:18:53 CST] [INFO] 			===============================================================
+[2018/01/03 10:18:53 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/03 10:18:53 CST] [INFO] 			===============================================================
+[2018/01/03 10:18:53 CST] [INFO] 
+[2018/01/03 10:18:53 CST] [INFO] ===============================================================
+[2018/01/03 10:18:53 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/03 10:18:53 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:18:53 CST] [DEBG] Res:
+[2018/01/03 10:18:53 CST] [EROR] TestONTID DeploySmartContract error:SendTransaction tx:&{TxType:208 PayloadVersion:0 Payload:0xc4201c23c0 Attributes:[0xc4201c0270] UTXOInputs:[] BalanceInputs:[] Outputs:[] Programs:[] AssetOutputs:map[] AssetInputAmount:map[] AssetOutputAmount:map[] hash:<nil>} error:Call sendrawtransaction error:Post http://localhost:20336: dial tcp [::1]:20336: getsockopt: connection refused
+[2018/01/03 10:18:53 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/03 10:18:53 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:18:53 CST] [INFO] 
+[2018/01/03 10:18:53 CST] [INFO] 		===============================================================
+[2018/01/03 10:18:53 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:0.00 s.
+[2018/01/03 10:18:53 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/03 10:18:53 CST] [INFO] 			Fail list:
+[2018/01/03 10:18:53 CST] [INFO] 			1.	TestONTID
+[2018/01/03 10:18:53 CST] [INFO] 		===============================================================
+[2018/01/03 10:19:28 CST] [INFO] 			===============================================================
+[2018/01/03 10:19:28 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/03 10:19:28 CST] [INFO] 			===============================================================
+[2018/01/03 10:19:28 CST] [INFO] 
+[2018/01/03 10:19:28 CST] [INFO] ===============================================================
+[2018/01/03 10:19:28 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/03 10:19:28 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:19:28 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"bcda9d5b3be73dd12bc8dadb96dc1bafa3f6668a1048d86aa38b965880c1bc51"}
+[2018/01/03 10:19:36 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"e60e35e60a5534c707c4e3526611eb8ca811af1f95de36a0478d6251318cf21b","Version":"1.0.0"}
+[2018/01/03 10:19:41 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":true,"Version":"1.0.0"}
+[2018/01/03 10:19:41 CST] [EROR] TestONTID test failed Assert:true to float failed
+[2018/01/03 10:19:41 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/03 10:19:41 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:19:41 CST] [INFO] 
+[2018/01/03 10:19:41 CST] [INFO] 		===============================================================
+[2018/01/03 10:19:41 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:13.16 s.
+[2018/01/03 10:19:41 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/03 10:19:41 CST] [INFO] 			Fail list:
+[2018/01/03 10:19:41 CST] [INFO] 			1.	TestONTID
+[2018/01/03 10:19:41 CST] [INFO] 		===============================================================
+[2018/01/03 10:20:06 CST] [INFO] 			===============================================================
+[2018/01/03 10:20:06 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/03 10:20:06 CST] [INFO] 			===============================================================
+[2018/01/03 10:20:06 CST] [INFO] 
+[2018/01/03 10:20:06 CST] [INFO] ===============================================================
+[2018/01/03 10:20:06 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/03 10:20:06 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:20:06 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"b1e6787504fd5c0bebae749085529ce765a5164c610387e4927f4cfb43c9cb70"}
+[2018/01/03 10:20:17 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"085fcdde9780dc9b23efe596356ce93684616f71934c7d1be1b8978bbeb83c2d","Version":"1.0.0"}
+[2018/01/03 10:20:23 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":true,"Version":"1.0.0"}
+[2018/01/03 10:20:23 CST] [EROR] TestONTID test failed Assert:true to float failed
+[2018/01/03 10:20:23 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/03 10:20:23 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:20:23 CST] [INFO] 
+[2018/01/03 10:20:23 CST] [INFO] 		===============================================================
+[2018/01/03 10:20:23 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:17.03 s.
+[2018/01/03 10:20:23 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/03 10:20:23 CST] [INFO] 			Fail list:
+[2018/01/03 10:20:23 CST] [INFO] 			1.	TestONTID
+[2018/01/03 10:20:23 CST] [INFO] 		===============================================================
+[2018/01/03 10:21:47 CST] [INFO] 			===============================================================
+[2018/01/03 10:21:47 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/03 10:21:47 CST] [INFO] 			===============================================================
+[2018/01/03 10:21:47 CST] [INFO] 
+[2018/01/03 10:21:47 CST] [INFO] ===============================================================
+[2018/01/03 10:21:47 CST] [INFO] 1. Start TestCase:TestCallContractStatic
+[2018/01/03 10:21:47 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:21:47 CST] [INFO] CodeHash: 8d083a6e86e5392441823627762649057b96bc42
+[2018/01/03 10:21:47 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"5954dff4f175e51e2877ea70aacb2acda0f3e9f9923d92d19e1fffd037da1a70"}
+[2018/01/03 10:21:53 CST] [DEBG] Res:{"id":"10","jsonpc":"2.0","result":"b5ad802ae510118c228b0038444460da1ffa7d82fa86209d63e54145c2018a58"}
+[2018/01/03 10:22:00 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"cbddf05b02edd25bf3b8352c156307e850c35d39358dd3cb94dda1463aca8451","Version":"1.0.0"}
+[2018/01/03 10:22:05 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SMARTCODE EXEC ERROR","Error":47001,"Result":{},"Version":"1.0.0"}
+[2018/01/03 10:22:05 CST] [EROR] TestTriggerType error:InvokeSmartContract failed. Error:47001 Desc:SMARTCODE EXEC ERROR Res:map[]
+[2018/01/03 10:22:05 CST] [INFO] TestCase:TestCallContractStatic failed.
+[2018/01/03 10:22:05 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:22:05 CST] [INFO] 
+[2018/01/03 10:22:05 CST] [INFO] 		===============================================================
+[2018/01/03 10:22:05 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:17.95 s.
+[2018/01/03 10:22:05 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/03 10:22:05 CST] [INFO] 			Fail list:
+[2018/01/03 10:22:05 CST] [INFO] 			1.	TestCallContractStatic
+[2018/01/03 10:22:05 CST] [INFO] 		===============================================================
+[2018/01/03 10:26:15 CST] [INFO] 			===============================================================
+[2018/01/03 10:26:15 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/03 10:26:15 CST] [INFO] 			===============================================================
+[2018/01/03 10:26:15 CST] [INFO] 
+[2018/01/03 10:26:15 CST] [INFO] ===============================================================
+[2018/01/03 10:26:15 CST] [INFO] 1. Start TestCase:TestCallContractStatic
+[2018/01/03 10:26:15 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:26:15 CST] [INFO] CodeHash: 8d083a6e86e5392441823627762649057b96bc42
+[2018/01/03 10:26:15 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"8c5bebeba6c2707185859aac4a78d2366bba4a16c3eb5359058e387da1e949fb"}
+[2018/01/03 10:26:19 CST] [DEBG] Res:{"id":"8","jsonpc":"2.0","result":"dc04cbbe2002d7f3e9274dc2d8f5037738fb1e8c9f49d87d3ee38ead932afa6c"}
+[2018/01/03 10:26:25 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"4be4696b31ca1cda46ecae8736cb97e74ec79d86ad18bf44dc64d12f47d040fd","Version":"1.0.0"}
+[2018/01/03 10:26:30 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SMARTCODE EXEC ERROR","Error":47001,"Result":{},"Version":"1.0.0"}
+[2018/01/03 10:26:30 CST] [EROR] TestTriggerType error:InvokeSmartContract failed. Error:47001 Desc:SMARTCODE EXEC ERROR Res:map[]
+[2018/01/03 10:26:30 CST] [INFO] TestCase:TestCallContractStatic failed.
+[2018/01/03 10:26:30 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:26:30 CST] [INFO] 
+[2018/01/03 10:26:30 CST] [INFO] 		===============================================================
+[2018/01/03 10:26:30 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:15.19 s.
+[2018/01/03 10:26:30 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/03 10:26:30 CST] [INFO] 			Fail list:
+[2018/01/03 10:26:30 CST] [INFO] 			1.	TestCallContractStatic
+[2018/01/03 10:26:30 CST] [INFO] 		===============================================================
+[2018/01/03 10:28:41 CST] [INFO] 			===============================================================
+[2018/01/03 10:28:41 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/03 10:28:41 CST] [INFO] 			===============================================================
+[2018/01/03 10:28:41 CST] [INFO] 
+[2018/01/03 10:28:41 CST] [INFO] ===============================================================
+[2018/01/03 10:28:41 CST] [INFO] 1. Start TestCase:TestCallContractStatic
+[2018/01/03 10:28:41 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:28:41 CST] [INFO] CodeHash: 8d083a6e86e5392441823627762649057b96bc42
+[2018/01/03 10:28:41 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"38bc0b8b0b25fafc30fb2472842e23acf9baf6392c377117cf4e87a94035fc53"}
+[2018/01/03 10:28:46 CST] [DEBG] Res:{"id":"9","jsonpc":"2.0","result":"52b80f05ca1b465b8db30589e5a68cb59d1f6a979f165fc98a3b3ab9ce962109"}
+[2018/01/03 10:28:52 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"547f62a2cf4b8668a3d330cffbef7afd2c9d9987671f38659685da1f70c5f77f","Version":"1.0.0"}
+[2018/01/03 10:28:57 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SMARTCODE EXEC ERROR","Error":47001,"Result":{},"Version":"1.0.0"}
+[2018/01/03 10:28:57 CST] [EROR] TestTriggerType error:InvokeSmartContract failed. Error:47001 Desc:SMARTCODE EXEC ERROR Res:map[]
+[2018/01/03 10:28:57 CST] [INFO] TestCase:TestCallContractStatic failed.
+[2018/01/03 10:28:57 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:28:57 CST] [INFO] 
+[2018/01/03 10:28:57 CST] [INFO] 		===============================================================
+[2018/01/03 10:28:57 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:16.04 s.
+[2018/01/03 10:28:57 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/03 10:28:57 CST] [INFO] 			Fail list:
+[2018/01/03 10:28:57 CST] [INFO] 			1.	TestCallContractStatic
+[2018/01/03 10:28:57 CST] [INFO] 		===============================================================
+[2018/01/03 10:31:40 CST] [INFO] 			===============================================================
+[2018/01/03 10:31:40 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/03 10:31:40 CST] [INFO] 			===============================================================
+[2018/01/03 10:31:40 CST] [INFO] 
+[2018/01/03 10:31:40 CST] [INFO] ===============================================================
+[2018/01/03 10:31:40 CST] [INFO] 1. Start TestCase:TestCallContractStatic
+[2018/01/03 10:31:40 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:31:40 CST] [INFO] CodeHash: 3d711163a4da8a8e37fd469a37e6cc04d37df369
+[2018/01/03 10:31:40 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"8e8cb1af4e5fb144e2f5005e29cca06f73cca895dfb52d7e70e04e76086d87a6"}
+[2018/01/03 10:31:46 CST] [DEBG] Res:{"id":"10","jsonpc":"2.0","result":"30ef30b613693e01ec1b786933190d5ec36e9717e598c0e07903a2fac96c8a04"}
+[2018/01/03 10:31:52 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"bc52a8eb99ff9d20248630131b97def8c79d3850e85a93d573b833c3c6183b4a","Version":"1.0.0"}
+[2018/01/03 10:31:57 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SMARTCODE EXEC ERROR","Error":47001,"Result":{},"Version":"1.0.0"}
+[2018/01/03 10:31:57 CST] [EROR] TestTriggerType error:InvokeSmartContract failed. Error:47001 Desc:SMARTCODE EXEC ERROR Res:map[]
+[2018/01/03 10:31:57 CST] [INFO] TestCase:TestCallContractStatic failed.
+[2018/01/03 10:31:57 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:31:57 CST] [INFO] 
+[2018/01/03 10:31:57 CST] [INFO] 		===============================================================
+[2018/01/03 10:31:57 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:17.22 s.
+[2018/01/03 10:31:57 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/03 10:31:57 CST] [INFO] 			Fail list:
+[2018/01/03 10:31:57 CST] [INFO] 			1.	TestCallContractStatic
+[2018/01/03 10:31:57 CST] [INFO] 		===============================================================
+[2018/01/03 10:33:38 CST] [INFO] 			===============================================================
+[2018/01/03 10:33:38 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/03 10:33:38 CST] [INFO] 			===============================================================
+[2018/01/03 10:33:38 CST] [INFO] 
+[2018/01/03 10:33:38 CST] [INFO] ===============================================================
+[2018/01/03 10:33:38 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/03 10:33:38 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:33:38 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"44624037578d637ca532f9aab7a41dc70f7aac6f3e26cb6994a92c02f4964ae3"}
+[2018/01/03 10:33:46 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"676246a5b04ef5d579595ec36295565ac8d4525012ed7f3975166169e00309da","Version":"1.0.0"}
+[2018/01/03 10:33:51 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":true,"Version":"1.0.0"}
+[2018/01/03 10:33:51 CST] [EROR] TestONTID test failed Assert:true to float failed
+[2018/01/03 10:33:51 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/03 10:33:51 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:33:51 CST] [INFO] 
+[2018/01/03 10:33:51 CST] [INFO] 		===============================================================
+[2018/01/03 10:33:51 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:13.45 s.
+[2018/01/03 10:33:51 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/03 10:33:51 CST] [INFO] 			Fail list:
+[2018/01/03 10:33:51 CST] [INFO] 			1.	TestONTID
+[2018/01/03 10:33:51 CST] [INFO] 		===============================================================
+[2018/01/03 10:36:38 CST] [INFO] 			===============================================================
+[2018/01/03 10:36:38 CST] [INFO] 			-------DNA Test Start Version:
+[2018/01/03 10:36:38 CST] [INFO] 			===============================================================
+[2018/01/03 10:36:38 CST] [INFO] 
+[2018/01/03 10:36:38 CST] [INFO] ===============================================================
+[2018/01/03 10:36:38 CST] [INFO] 1. Start TestCase:TestONTID
+[2018/01/03 10:36:38 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:36:38 CST] [DEBG] Res:{"id":"2","jsonpc":"2.0","result":"95543b0fc91d06ef28ec585a29f460e2ee69450945de3d201cfaac56803c74fe"}
+[2018/01/03 10:36:46 CST] [INFO] ==>WS:{"Action":"sendrawtransaction","Desc":"SUCCESS","Error":0,"Result":"b904f124fd02336d19fe0659ca6868f9b0e385501d740f38d8847d21106b98d3","Version":"1.0.0"}
+[2018/01/03 10:36:51 CST] [INFO] ==>WS:{"Action":"InvokeTransaction","Desc":"SUCCESS","Error":0,"Result":true,"Version":"1.0.0"}
+[2018/01/03 10:36:51 CST] [EROR] TestONTID test failed Assert:true to float failed
+[2018/01/03 10:36:51 CST] [INFO] TestCase:TestONTID failed.
+[2018/01/03 10:36:51 CST] [INFO] ---------------------------------------------------------------
+[2018/01/03 10:36:51 CST] [INFO] 
+[2018/01/03 10:36:51 CST] [INFO] 		===============================================================
+[2018/01/03 10:36:51 CST] [INFO] 		DNA Test Finish Total:1 Success:0 Failed:1 Skip:0 TimeCost:13.76 s.
+[2018/01/03 10:36:51 CST] [INFO] 		---------------------------------------------------------------
+[2018/01/03 10:36:51 CST] [INFO] 			Fail list:
+[2018/01/03 10:36:51 CST] [INFO] 			1.	TestONTID
+[2018/01/03 10:36:51 CST] [INFO] 		===============================================================
