@@ -11,7 +11,7 @@ import (
 	//"github.com/ONT_TEST/testcase/smartcontract/api/input"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/blockchain"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/account"
-	"github.com/ONT_TEST/testcase/smartcontract/api/sys"
+	"github.com/ONT_TEST/testcase/smartcontract/api/smartcontract"
 )
 
 func TestAPI() {
@@ -59,8 +59,9 @@ func TestAPI() {
 	//TFramework.RegTestCase("TestGetInputHash", input.TestGetInputHash)
 
 	//triggetype
-	TFramework.RegTestCase("TestTriggerType",sys.TestTriggerType)
-	TFramework.RegTestCase("TestCallContractStatic",sys.TestCallContractStatic)
-
+	//TFramework.RegTestCase("TestTriggerType",smartcontract.TestTriggerType)
+	//TFramework.RegTestCase("TestCallContractStatic", smartcontract.TestCallContractStatic)
+	TFramework.RegTestCase("TestCallingScriptHash", smartcontract.TestCallingScriptHash)
+	//TFramework.RegTestCase("TestCheckWitness", smartcontract.TestCheckWitness)
 }
 

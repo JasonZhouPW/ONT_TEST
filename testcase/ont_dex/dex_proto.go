@@ -2,12 +2,13 @@ package ont_dex
 
 import (
 	. "github.com/ONT_TEST/testframework"
+	"github.com/Ontology/account"
 	"github.com/Ontology/core/contract"
 	"github.com/Ontology/smartcontract/types"
 	"time"
 )
 
-func TestDexProto(ctx *TestFrameworkContext)bool{
+func deployDexProto(ctx *TestFrameworkContext) bool {
 	code := DExProtoCode
 	_, err := ctx.Ont.DeploySmartContract(ctx.OntClient.Account1,
 		code,
@@ -21,119 +22,156 @@ func TestDexProto(ctx *TestFrameworkContext)bool{
 		types.NEOVM,
 	)
 	if err != nil {
-		ctx.LogError("TestDexProto DeploySmartContract error:%s", err)
+		ctx.LogError("deployDexProto DeploySmartContract error:%s", err)
 		return false
 	}
 	//等待出块
 	_, err = ctx.Ont.WaitForGenerateBlock(30*time.Second, 1)
 	if err != nil {
-		ctx.LogError("TestDexProto WaitForGenerateBlock error:%s", err)
+		ctx.LogError("deployDexProto WaitForGenerateBlock error:%s", err)
 		return false
 	}
-	//if !testDexProtoInit(ctx, code) {
+	//admin := ctx.OntClient.Admin
+	//if !testDexProtoInit(ctx, admin) {
 	//	return false
 	//}
-	if !testOnMakeOrder(ctx, code) {
-		return false
-	}
-	if !testOnOrderComplete(ctx, code) {
-		return false
-	}
-	if !testOnOrderCancel(ctx, code) {
-		return false
-	}
-	return true;
+	//buyer := ctx.OntClient.Account1
+	//seller := ctx.OntClient.Account2
+	//amount := 11
+	//if !testReceipt(ctx, buyer, amount) {
+	//	return false
+	//}
+	//if !testOnMakeOrder(ctx, buyer, seller, amount) {
+	//	return false
+	//}
+	//if !testOnOrderComplete(ctx, buyer, seller, amount) {
+	//	return false
+	//}
+	//buyer, seller = seller, buyer
+	//amount = 12
+	//if !testReceipt(ctx, buyer, amount) {
+	//	return false
+	//}
+	//if !testOnMakeOrder(ctx, buyer, seller, amount) {
+	//	return false
+	//}
+	//if !testOnOrderCancel(ctx, buyer, seller, amount) {
+	//	return false
+	//}
+	return true
 }
 
-func testDexProtoInit(ctx *TestFrameworkContext, code string) bool {
+func dexProtoInit(ctx *TestFrameworkContext, admin *account.Account) bool {
 	res, err := ctx.Ont.InvokeSmartContract(
-		ctx.OntClient.Account1,
-		code,
-		[]interface{}{"init", []interface{}{[]byte{1}, ctx.OntClient.Account1.ProgramHash.ToArray()}},
+		admin,
+		DExProtoCode,
+		[]interface{}{"init", []interface{}{admin.ProgramHash.ToArray(), []byte("")}},
 	)
 	if err != nil {
-		ctx.LogError("testDexProtoInit error:%s", err)
+		ctx.LogError("dexProtoInit error:%s", err)
 		return false
 	}
-	ctx.LogInfo("testDexProtoInit res:%s", res)
+	ctx.LogInfo("dexProtoInit res:%s", res)
 	errorCode, err := GetErrorCode(res)
 	if err != nil {
-		ctx.LogError("testDexProtoInit getErrorCode error:%s", err)
+		ctx.LogError("dexProtoInit getErrorCode error:%s", err)
 		return false
 	}
-	if errorCode != 0 {
-		ctx.LogError("testDexProtoInit failed errorCode:%d", errorCode)
+	if errorCode != 0 && errorCode != 2009 {
+		ctx.LogError("dexProtoInit failed errorCode:%d", errorCode)
 		return false
 	}
 	return true
 }
 
-func testOnMakeOrder(ctx *TestFrameworkContext, code string) bool {
+func addProtoCaller(ctx *TestFrameworkContext,admin *account.Account, caller []byte) bool{
 	res, err := ctx.Ont.InvokeSmartContract(
-		ctx.OntClient.Account1,
-		code,
-		[]interface{}{"onmakeorder", []interface{}{ctx.OntClient.Account1.ProgramHash.ToArray(), ctx.OntClient.Account2.ProgramHash.ToArray(), 10}},
+		admin,
+		DExProtoCode,
+		[]interface{}{"addcaller", []interface{}{caller}},
 	)
 	if err != nil {
-		ctx.LogError("testOnMakeOrder error:%s", err)
+		ctx.LogError("addProtoCaller error:%s", err)
 		return false
 	}
-	ctx.LogInfo("testOnMakeOrder res:%s", res)
+	ctx.LogInfo("addProtoCaller res:%s", res)
 	errorCode, err := GetErrorCode(res)
 	if err != nil {
-		ctx.LogError("testOnMakeOrder getErrorCode error:%s", err)
+		ctx.LogError("addProtoCaller getErrorCode error:%s", err)
 		return false
 	}
 	if errorCode != 0 {
-		ctx.LogError("testOnMakeOrder failed errorCode:%d", errorCode)
+		ctx.LogError("addProtoCaller failed errorCode:%d", errorCode)
 		return false
 	}
 	return true
 }
-
-func testOnOrderComplete(ctx *TestFrameworkContext, code string) bool {
-	res, err := ctx.Ont.InvokeSmartContract(
-		ctx.OntClient.Account1,
-		code,
-		[]interface{}{"onordercomplete", []interface{}{ctx.OntClient.Account1.ProgramHash.ToArray(), ctx.OntClient.Account2.ProgramHash.ToArray(), 10}},
-	)
-	if err != nil {
-		ctx.LogError("testOnOrderComplete error:%s", err)
-		return false
-	}
-	ctx.LogInfo("testOnOrderComplete res:%s", res)
-	errorCode, err := GetErrorCode(res)
-	if err != nil {
-		ctx.LogError("testOnOrderComplete getErrorCode error:%s", err)
-		return false
-	}
-	if errorCode != 0 {
-		ctx.LogError("testOnOrderComplete failed errorCode:%d", errorCode)
-		return false
-	}
-	return true
-}
-
-func testOnOrderCancel(ctx *TestFrameworkContext, code string) bool {
-	res, err := ctx.Ont.InvokeSmartContract(
-		ctx.OntClient.Account1,
-		code,
-		[]interface{}{"onordercancel", []interface{}{ctx.OntClient.Account1.ProgramHash.ToArray(), ctx.OntClient.Account2.ProgramHash.ToArray(), 10}},
-	)
-	if err != nil {
-		ctx.LogError("testOnOrderCancel error:%s", err)
-		return false
-	}
-	ctx.LogInfo("testOnOrderCancel res:%s", res)
-	errorCode, err := GetErrorCode(res)
-	if err != nil {
-		ctx.LogError("testOnOrderCancel getErrorCode error:%s", err)
-		return false
-	}
-	if errorCode != 0 {
-		ctx.LogError("testOnOrderCancel failed errorCode:%d", errorCode)
-		return false
-	}
-	return true
-}
-
+//
+//func testOnMakeOrder(ctx *TestFrameworkContext,buyer, seller *account.Account, amount int) bool {
+//	res, err := ctx.Ont.InvokeSmartContract(
+//		buyer,
+//		DExProtoCode,
+//		[]interface{}{"onmakeorder", []interface{}{ buyer.ProgramHash.ToArray(), seller.ProgramHash.ToArray(), amount}},
+//	)
+//	if err != nil {
+//		ctx.LogError("testOnMakeOrder error:%s", err)
+//		return false
+//	}
+//	ctx.LogInfo("testOnMakeOrder res:%s", res)
+//	errorCode, err := GetErrorCode(res)
+//	if err != nil {
+//		ctx.LogError("testOnMakeOrder getErrorCode error:%s", err)
+//		return false
+//	}
+//	if errorCode != 0 {
+//		ctx.LogError("testOnMakeOrder failed errorCode:%d", errorCode)
+//		return false
+//	}
+//	return true
+//}
+//
+//func testOnOrderComplete(ctx *TestFrameworkContext, buyer, seller *account.Account, amount int) bool {
+//	res, err := ctx.Ont.InvokeSmartContract(
+//		buyer,
+//		DExProtoCode,
+//		[]interface{}{"onordercomplete", []interface{}{ buyer.ProgramHash.ToArray(), seller.ProgramHash.ToArray(), amount}},
+//	)
+//	if err != nil {
+//		ctx.LogError("testOnOrderComplete error:%s", err)
+//		return false
+//	}
+//	ctx.LogInfo("testOnOrderComplete res:%s", res)
+//	errorCode, err := GetErrorCode(res)
+//	if err != nil {
+//		ctx.LogError("testOnOrderComplete getErrorCode error:%s", err)
+//		return false
+//	}
+//	if errorCode != 0 {
+//		ctx.LogError("testOnOrderComplete failed errorCode:%d", errorCode)
+//		return false
+//	}
+//	return true
+//}
+//
+//func testOnOrderCancel(ctx *TestFrameworkContext, buyer, seller *account.Account, amount int) bool {
+//	res, err := ctx.Ont.InvokeSmartContract(
+//		buyer,
+//		DExProtoCode,
+//		[]interface{}{"onordercancel", []interface{}{ buyer.ProgramHash.ToArray(), seller.ProgramHash.ToArray(), amount}},
+//	)
+//	if err != nil {
+//		ctx.LogError("testOnOrderCancel error:%s", err)
+//		return false
+//	}
+//	ctx.LogInfo("testOnOrderCancel res:%s", res)
+//	errorCode, err := GetErrorCode(res)
+//	if err != nil {
+//		ctx.LogError("testOnOrderCancel getErrorCode error:%s", err)
+//		return false
+//	}
+//	if errorCode != 0 {
+//		ctx.LogError("testOnOrderCancel failed errorCode:%d", errorCode)
+//		return false
+//	}
+//	return true
+//}
