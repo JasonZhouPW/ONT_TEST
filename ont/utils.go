@@ -212,13 +212,13 @@ func ParseTransactionBalanceTxInputInfo(input *BalanceTxInputInfo) (*transaction
 	if err != nil {
 		return nil, fmt.Errorf("ParseUint160FromString BalanceTxInputInfo.ProgramHash:%s error:%s", input.ProgramHash, err)
 	}
-	value, err := ParseFixed64FromString(input.Value)
-	if err != nil {
-		return nil, fmt.Errorf("ParseFixed64FromString input.Value:%s error:%s", input.Value, err)
-	}
+	//value, err := ParseFixed64FromString(input.Value)
+	//if err != nil {
+	//	return nil, fmt.Errorf("ParseFixed64FromString input.Value:%s error:%s", input.Value, err)
+	//}
 	return &transaction.BalanceTxInput{
 		AssetID:     assetId,
-		Value:       value,
+		Value:       input.Value,
 		ProgramHash: programHash,
 	}, nil
 }
@@ -232,13 +232,13 @@ func ParseTransactionOutputs(output *TxoutputInfo) (*utxo.TxOutput, error) {
 	if err != nil {
 		return nil, fmt.Errorf("ParseUint160FromString TxOutput.ProgramHash:%s error:%s", output.ProgramHash, err)
 	}
-	value, err := ParseFixed64FromString(output.Value)
-	if err != nil {
-		return nil, fmt.Errorf("ParseFixed64FromString output.Value:%s error:%s", output.Value, err)
-	}
+	//value, err := ParseFixed64FromString(output.Value)
+	//if err != nil {
+	//	return nil, fmt.Errorf("ParseFixed64FromString output.Value:%s error:%s", output.Value, err)
+	//}
 	return &utxo.TxOutput{
 		AssetID:     assetId,
-		Value:       value,
+		Value:       output.Value,
 		ProgramHash: programHash,
 	}, nil
 }
