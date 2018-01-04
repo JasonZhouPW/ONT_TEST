@@ -562,8 +562,8 @@ func (this *Ontology) GetTransactionReference(tx *transaction.Transaction) (map[
 		reference[item] = referTx.Outputs[index]
 	}
 	return reference, nil
-
 }
+
 func (this *Ontology) sendRpcRequest(method string, params []interface{}) ([]byte, error) {
 	data, err := this.Call(this.getRpcAddress(), method, this.getQid(), params)
 	if method == ONT_RPC_SENDTRANSACTION {

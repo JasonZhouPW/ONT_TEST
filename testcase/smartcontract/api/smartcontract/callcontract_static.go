@@ -6,17 +6,18 @@ import (
 	"github.com/Ontology/core/contract"
 	"github.com/Ontology/smartcontract/types"
 	"time"
+	"encoding/hex"
 )
 
 func TestCallContractStatic(ctx *TestFrameworkContext) bool {
 	codeA := "52c56b6c766b00527ac4616c766b00c36c766b51527ac46203006c766b51c3616c7566"
-	codeb, _ := common.HexToBytes(codeA)
-	codeHash, err := common.ToCodeHash(codeb)
+	c, _ := hex.DecodeString(codeA)
+	codeHash, err := common.ToCodeHash(c)
 	if err != nil {
 		ctx.LogError("TestCallContractStatic ToCodeHash error:%s", err)
 		return false
 	}
-	ctx.LogInfo("CodeHash: %x", codeHash)
+	ctx.LogInfo("CodeHash: %x R: %x", codeHash, codeHash.ToArrayReverse())
 	_, err = ctx.Ont.DeploySmartContract(ctx.OntClient.Account1,
 		codeA,
 		[]contract.ContractParameterType{},
@@ -39,7 +40,7 @@ func TestCallContractStatic(ctx *TestFrameworkContext) bool {
 		return false
 	}
 
-	codeB := "52c56b6c766b00527ac4616c766b00c3616742bc967b05492676273682412439e5866e3a088d6c766b51527ac46203006c766b51c3616c7566"
+	codeB := "52c56b6c766b00527ac4616c766b00c361673d711163a4da8a8e37fd469a37e6cc04d37df3696c766b51527ac46203006c766b51c3616c7566"
 	_, err = ctx.Ont.DeploySmartContract(ctx.OntClient.Account1,
 		codeB,
 		[]contract.ContractParameterType{},
@@ -104,7 +105,7 @@ using System.Numerics;
 
 public class HelloWorld : SmartContract
 {
-    [Appcall("8d083a6e86e5392441823627762649057b96bc42")]
+    [Appcall("69f37dd304cce6379a46fd378e8adaa46311713d")]
     public static extern int OtherContract(int input);
     public static int Main(int input)
     {
@@ -112,5 +113,24 @@ public class HelloWorld : SmartContract
     }
 }
 
-Code:52c56b6c766b00527ac4616c766b00c3616742bc967b05492676273682412439e5866e3a088d6c766b51527ac46203006c766b51c3616c7566
+Code:52c56b6c766b00527ac4616c766b00c361673d711163a4da8a8e37fd469a37e6cc04d37df3696c766b51527ac46203006c766b51c3616c7566
+
+
+using Neo.SmartContract.Framework;
+using Neo.SmartContract.Framework.Services.Neo;
+using Neo.SmartContract.Framework.Services.System;
+using System.Numerics;
+
+public class B : SmartContract
+{
+    [Appcall("69f37dd304cce6379a46fd378e8adaa46311713d")]
+    public static extern byte[] OtherContract();
+    public static byte[] Main()
+    {
+        return OtherContract();
+    }
+
+}
+
+Code:
 */
