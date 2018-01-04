@@ -735,6 +735,17 @@ func (this *Ontology) InvokeSmartContract(
 	smartContractCode string,
 	smartContractParams []interface{}) (interface{}, error) {
 
+	tx, err := this.BuildSmartContractInvokerTx(smartContractCode, smartContractParams)
+	if err != nil {
+		return nil, fmt.Errorf("buildSmartContractInvokerTx error:%s", err)
+	}
+
+	return this.InvokeSmartContractWithTx(account, tx)
+}
+
+func (this *Ontology) BuildSmartContractInvokerTx(
+	smartContractCode string,
+	smartContractParams []interface{}) (*transaction.Transaction, error){
 	c, err := hex.DecodeString(smartContractCode)
 	if err != nil {
 		return nil, fmt.Errorf("hex.DecodeString code:%s error:%s", smartContractCode, err)
@@ -753,7 +764,10 @@ func (this *Ontology) InvokeSmartContract(
 	if err != nil {
 		return nil, fmt.Errorf("NewInvokeTransaction error:%s", err)
 	}
+	return tx, nil
+}
 
+func (this *Ontology) InvokeSmartContractWithTx(account *account.Account, tx *transaction.Transaction)(interface{}, error) {
 	wsClient := utils.NewWebSocketClient(this.getWSAddress())
 	recvCh, err := wsClient.Connet()
 	if err != nil {
