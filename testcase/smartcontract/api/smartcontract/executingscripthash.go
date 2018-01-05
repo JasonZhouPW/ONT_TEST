@@ -6,11 +6,10 @@ import (
 	"github.com/Ontology/core/contract"
 	"github.com/Ontology/smartcontract/types"
 	"time"
-	"encoding/hex"
 )
 
 func TestExecutingScriptHash(ctx *TestFrameworkContext) bool {
-	code := "52c56b6151c56c766b00527ac46c766b00c30061682d53797374656d2e457865637574696f6e456e67696e652e476574457865637574696e6753637269707448617368c46c766b00c36c766b51527ac46203006c766b51c3616c7566"
+	code := "51c56b6161682d53797374656d2e457865637574696f6e456e67696e652e476574457865637574696e67536372697074486173686c766b00527ac46203006c766b00c3616c7566"
 	_, err := ctx.Ont.DeploySmartContract(ctx.OntClient.Account1,
 		code,
 		[]contract.ContractParameterType{},
@@ -43,25 +42,12 @@ func TestExecutingScriptHash(ctx *TestFrameworkContext) bool {
 	}
 	ctx.LogInfo("TestExecutingScriptHash res:%s", res)
 
-	v, ok := res.([]interface{})
-	if !ok {
-		ctx.LogError("TestExecutingScriptHash assert failed")
-		return false
-	}
-
-	hc, ok := v[0].(string)
-	if !ok {
-		ctx.LogError("TestExecutingScriptHash assert to string failed")
-		return false
-	}
-
 	c, _ := common.HexToBytes(code)
 	codeHash, _ := common.ToCodeHash(c)
-	
-	hcb, _ := hex.DecodeString(hc)
 
-	if string(codeHash.ToArray()) != string(hcb){
-		ctx.LogError("TestExecutingScriptHash res: %x != %x", hcb, codeHash.ToArray())
+	err = ctx.AssertToByteArray(res, codeHash.ToArray())
+	if err != nil {
+		ctx.LogError("AssertToByteArray error:%s", err)
 		return false
 	}
 
@@ -76,11 +62,9 @@ using System.Numerics;
 
 public class A : SmartContract
 {
-    public static object[] Main()
+    public static byte[] Main()
     {
-        object[] ret = new object[1];
-        ret[0] = ExecutionEngine.ExecutingScriptHash;
-        return ret;
+        return ExecutionEngine.ExecutingScriptHash;
     }
 }
 */
