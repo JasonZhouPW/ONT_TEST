@@ -9,8 +9,9 @@ import (
 	//"github.com/ONT_TEST/testcase/vm/operator"
 	//"github.com/ONT_TEST/testcase/smartcontract/method"
 	//"github.com/ONT_TEST/testcase/smartcontract/deployinvoke"
-	//"github.com/ONT_TEST/testcase/ont_dex"
-	"github.com/ONT_TEST/testcase/smartcontract/api"
+	//"github.com/ONT_TEST/testcase/smartcontract/api"
+	"github.com/ONT_TEST/testcase/ont_dex"
+	//"github.com/ONT_TEST/testcase/vm/datatype"
 )
 
 func init() {
@@ -20,8 +21,8 @@ func init() {
 	//storage.TestStorage()
 	//method.TestMethod()
 	//deployinvoke.TestDeployInvoke()
-	api.TestAPI()
+	//api.TestAPI()
 	//asset.TestAsset()
 	//record.TestRecord()
-	//ont_dex.TestOntDex()
+	ont_dex.TestOntDex()
 }
