@@ -42,10 +42,7 @@ func TestDexFundDeposit(ctx *testframework.TestFrameworkContext) bool {
 		ctx.LogError("TestDexFund DexFund.Deposit error:%s", err)
 		return false
 	}
-	_, err = ctx.Ont.WaitForGenerateBlock(30 * time.Second)
-	if err != nil {
-		ctx.LogError("WaitForGenerateBlock error:%s", err)
-	}
+
 	availAfter, _, err := DexFund.BalanceOf(ctx, ctx.OntClient.Account1)
 	if err != nil {
 		ctx.LogError("TestDexFund DexFund.AvailBalanceOf error:%s", err)
@@ -53,48 +50,59 @@ func TestDexFundDeposit(ctx *testframework.TestFrameworkContext) bool {
 	}
 	delta := availAfter - availBefer
 	if delta != amount {
-		ctx.LogError("TestDexFundDeposit error, Delta :%d != %d ", delta, amount)
+		ctx.LogError("TestDexFundDeposit error, Delta :%v != %v ", delta, amount)
 		return false
 	}
 	return true
 }
-//
-//func TestMakeBuyOrder(ctx *testframework.TestFrameworkContext) bool{
-//	err := initTestOntDex(ctx)
-//	if err != nil {
-//		ctx.LogError("initTestOntDex error:%s", err)
-//		ctx.FailNow()
-//		return false
-//	}
-//
-//	buyer := ctx.OntClient.Account1
-//	seller := ctx.OntClient.Account2
-//	amount := 1.01
-//
-//	availBefer, totalBefer, err := DexFund.BalanceOf(ctx, buyer)
-//	if err != nil {
-//		ctx.LogError("TestMakeBuyOrder DexFund.BalanceOf error:%s", err)
-//		return false
-//	}
-//
-//	orderId := []byte(fmt.Sprint("%d", rand.Int31()))
-//	orderSig, err := crypto.Sign(buyer.PrivateKey, orderId)
-//	if err != nil {
-//		ctx.LogError("TestOrderComplete crypto.Sign error:%s", err)
-//		return false
-//	}
-//	err = DexP2P.MakeBuyOrder(ctx, orderSig, orderId, buyer, seller, amount)
-//	if err != nil {
-//		ctx.LogError("TestOrderComplete MakeBuyOrder error:%s", err)
-//		return false
-//	}
-//
-//
-//
-//	DexP2P.MakeBuyOrder(ctx, )
-//
-//	return true
-//}
+
+func TestMakeBuyOrder(ctx *testframework.TestFrameworkContext) bool {
+	err := initTestOntDex(ctx)
+	if err != nil {
+		ctx.LogError("initTestOntDex error:%s", err)
+		ctx.FailNow()
+		return false
+	}
+
+	buyer := ctx.OntClient.Account1
+	seller := ctx.OntClient.Account2
+	amount := 2.0
+
+	availBefor, totalBefor, err := DexFund.BalanceOf(ctx, buyer)
+	if err != nil {
+		ctx.LogError("TestMakeBuyOrder DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	orderId := []byte(fmt.Sprint("%d", rand.Int31()))
+	orderSig, err := crypto.Sign(buyer.PrivateKey, orderId)
+	if err != nil {
+		ctx.LogError("TestOrderComplete crypto.Sign error:%s", err)
+		return false
+	}
+	err = DexP2P.MakeBuyOrder(ctx, orderSig, orderId, buyer, seller, amount)
+	if err != nil {
+		ctx.LogError("TestOrderComplete MakeBuyOrder error:%s", err)
+		return false
+	}
+
+	availAfter, totalAfter, err := DexFund.BalanceOf(ctx, buyer)
+	if err != nil {
+		ctx.LogError("TestMakeBuyOrder DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	if availAfter != (availBefor - amount) {
+		ctx.LogError("MakeBuyOrder availfund: %v != %v", availAfter, (availBefor - amount))
+		return false
+	}
+
+	if totalAfter != totalBefor {
+		ctx.LogError("MakeBuyOrder totalfund: %v != %v", totalAfter, totalBefor)
+		return false
+	}
+	return true
+}
 
 func TestOrderComplete(ctx *testframework.TestFrameworkContext) bool {
 	err := initTestOntDex(ctx)
@@ -119,16 +127,62 @@ func TestOrderComplete(ctx *testframework.TestFrameworkContext) bool {
 		ctx.LogError("TestOrderComplete crypto.Sign error:%s", err)
 		return false
 	}
+
 	err = DexP2P.MakeBuyOrder(ctx, orderSig, orderId, buyer, seller, amount)
 	if err != nil {
 		ctx.LogError("TestOrderComplete MakeBuyOrder error:%s", err)
 		return false
 	}
+
+	buyerAvailBeforComplete, buyerTotalBeforComplete, err := DexFund.BalanceOf(ctx, buyer)
+	if err != nil {
+		ctx.LogError("TestOrderComplete DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	sellerAvailBeforComplete, sellerTotalBeforComplete, err := DexFund.BalanceOf(ctx, seller)
+	if err != nil {
+		ctx.LogError("TestOrderComplete DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
 	err = DexP2P.BuyOrderComplete(ctx, orderId, buyer)
 	if err != nil {
 		ctx.LogError("TestOrderComplete BuyOrderComplete error:%s", err)
 		return false
 	}
+
+	sellerAvailAfterComplete, sellerTotalAfterComplete, err := DexFund.BalanceOf(ctx, seller)
+	if err != nil {
+		ctx.LogError("TestOrderComplete DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	if sellerAvailAfterComplete != (sellerAvailBeforComplete + amount) {
+		ctx.LogError("TestOrderComplete sellerAvailFundAfterComplete %v != %v", sellerAvailAfterComplete, sellerAvailBeforComplete+amount)
+		return false
+	}
+	if sellerTotalAfterComplete != (sellerTotalBeforComplete + amount) {
+		ctx.LogError("TestOrderComplete sellerTotalFundAfterComplete %v != %v", sellerTotalAfterComplete, sellerTotalBeforComplete+amount)
+		return false
+	}
+
+	buyerAvailAfterComplete, buyerTotalAfterComplete, err := DexFund.BalanceOf(ctx, buyer)
+	if err != nil {
+		ctx.LogError("TestOrderComplete DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	if buyerAvailAfterComplete != buyerAvailBeforComplete {
+		ctx.LogError("TestOrderComplete buyerAvailAfterComplete %v != %v", buyerAvailAfterComplete, buyerAvailBeforComplete)
+		return false
+	}
+
+	if buyerTotalAfterComplete != (buyerTotalBeforComplete - amount) {
+		ctx.LogError("TestOrderComplete buyerTotalAfterComplete %v != %v", buyerTotalAfterComplete, buyerTotalBeforComplete-amount)
+		return false
+	}
+
 	return true
 }
 
@@ -155,16 +209,159 @@ func TestOrderCancel(ctx *testframework.TestFrameworkContext) bool {
 		ctx.LogError("TestOrderCancel crypto.Sign error:%s", err)
 		return false
 	}
+
 	err = DexP2P.MakeBuyOrder(ctx, orderSig, orderId, buyer, seller, amount)
 	if err != nil {
 		ctx.LogError("TestOrderCancel MakeBuyOrder error:%s", err)
 		return false
 	}
-	err = DexP2P.BuyOrderCancel(ctx, orderId, buyer)
+
+	buyerAvailBeforCancel, buyerTotalBeforCancel, err := DexFund.BalanceOf(ctx, buyer)
 	if err != nil {
-		ctx.LogError("TestOrderComplete BuyOrderCancel error:%s", err)
+		ctx.LogError("TestOrderCancel DexFund.BalanceOf error:%s", err)
 		return false
 	}
+
+	sellerAvailBeforCancel, sellerTotalBeforCancel, err := DexFund.BalanceOf(ctx, seller)
+	if err != nil {
+		ctx.LogError("TestOrderCancel DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	err = DexP2P.BuyOrderCancel(ctx, orderId, buyer)
+	if err != nil {
+		ctx.LogError("TestOrderCancel BuyOrderCancel error:%s", err)
+		return false
+	}
+
+	sellerAvailAfterCancel, sellerTotalAfterCancel, err := DexFund.BalanceOf(ctx, seller)
+	if err != nil {
+		ctx.LogError("TestOrderCancel DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	if sellerAvailAfterCancel != sellerAvailBeforCancel {
+		ctx.LogError("TestOrderCancel sellerAvailFundAfterCancel %v != %v", sellerAvailAfterCancel, sellerAvailBeforCancel)
+		return false
+	}
+	if sellerTotalAfterCancel != sellerTotalBeforCancel {
+		ctx.LogError("TestOrderCancel sellerTotalFundAfterCancel %v != %v", sellerTotalAfterCancel, sellerTotalBeforCancel)
+		return false
+	}
+
+	buyerAvailAfterCancel, buyerTotalAfterCancel, err := DexFund.BalanceOf(ctx, buyer)
+	if err != nil {
+		ctx.LogError("TestOrderCancel DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	if buyerAvailAfterCancel != buyerAvailBeforCancel+amount {
+		ctx.LogError("TestOrderCancel buyerAvailAfterCancel %v != %v", buyerAvailAfterCancel, buyerAvailBeforCancel+amount)
+		return false
+	}
+
+	if buyerTotalAfterCancel != buyerTotalBeforCancel {
+		ctx.LogError("TestOrderCancel buyerTotalAfterCancel %v != %v", buyerTotalAfterCancel, buyerTotalBeforCancel)
+		return false
+	}
+
+	return true
+}
+
+func TestSellerTryCloseOrder(ctx *testframework.TestFrameworkContext) bool {
+	err := initTestOntDex(ctx)
+	if err != nil {
+		ctx.LogError("initTestOntDex error:%s", err)
+		ctx.FailNow()
+		return false
+	}
+	buyer := ctx.OntClient.Account1
+	seller := ctx.OntClient.Account2
+	amount := 2.0
+	assetId := ctx.OntAsset.GetAssetId(assetName)
+
+	err = DexFund.Deposit(ctx, assetId, buyer, amount)
+	if err != nil {
+		ctx.LogError("TestSellerTryCloseOrder DexFund.Deposit error:%s", err)
+		return false
+	}
+	orderId := []byte(fmt.Sprint("%d", rand.Int31()))
+	orderSig, err := crypto.Sign(buyer.PrivateKey, orderId)
+	if err != nil {
+		ctx.LogError("TestSellerTryCloseOrder crypto.Sign error:%s", err)
+		return false
+	}
+
+	buyerAvailBeforTryClose, buyerTotalBeforTryClose, err := DexFund.BalanceOf(ctx, buyer)
+	if err != nil {
+		ctx.LogError("TestSellerTryCloseOrder DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	sellerAvailBeforTryClose, sellerTotalBeforTryClose, err := DexFund.BalanceOf(ctx, seller)
+	if err != nil {
+		ctx.LogError("TestSellerTryCloseOrder DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	err = DexP2P.MakeBuyOrder(ctx, orderSig, orderId, buyer, seller, amount)
+	if err != nil {
+		ctx.LogError("TestSellerTryCloseOrder MakeBuyOrder error:%s", err)
+		return false
+	}
+
+	//should failed
+	err = DexP2P.SellerTryCloseOrder(ctx, orderId, seller)
+	if err == nil {
+		ctx.LogError("TestSellerTryCloseOrder SellerTryCloseOrder should failed")
+		return false
+	}
+
+	lockTime, err := DexP2P.GetOrderLockTime(ctx)
+	if err != nil {
+		ctx.LogError("TestSellerTryCloseOrder GetOrderLockTime error:%s", err)
+		return false
+	}
+
+	time.Sleep(time.Second * time.Duration(lockTime))
+
+	err = DexP2P.SellerTryCloseOrder(ctx, orderId, seller)
+	if err != nil {
+		ctx.LogError("TestSellerTryCloseOrder SellerTryCloseOrder error:%s", err)
+		return false
+	}
+
+	sellerAvailAfterTryClose, sellerTotalAfterTryClose, err := DexFund.BalanceOf(ctx, seller)
+	if err != nil {
+		ctx.LogError("TestSellerTryCloseOrder DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	if sellerAvailAfterTryClose != (sellerAvailBeforTryClose + amount) {
+		ctx.LogError("TestSellerTryCloseOrder sellerAvailFundAfterTryClose %v != %v", sellerAvailAfterTryClose, sellerAvailBeforTryClose+amount)
+		return false
+	}
+	if sellerTotalAfterTryClose != (sellerTotalBeforTryClose + amount) {
+		ctx.LogError("TestSellerTryCloseOrder sellerTotalFundAfterTryClose %v != %v", sellerTotalAfterTryClose, sellerTotalBeforTryClose+amount)
+		return false
+	}
+
+	buyerAvailAfterTryClose, buyerTotalAfterTryClose, err := DexFund.BalanceOf(ctx, buyer)
+	if err != nil {
+		ctx.LogError("TestSellerTryCloseOrder DexFund.BalanceOf error:%s", err)
+		return false
+	}
+
+	if buyerAvailAfterTryClose != buyerAvailBeforTryClose {
+		ctx.LogError("TestSellerTryCloseOrder buyerAvailAfterTryClose %v != %v", buyerAvailAfterTryClose, buyerAvailBeforTryClose)
+		return false
+	}
+
+	if buyerTotalAfterTryClose != (buyerTotalBeforTryClose - amount) {
+		ctx.LogError("TestSellerTryCloseOrder buyerTotalAfterTryClose %v != %v", buyerTotalAfterTryClose, buyerTotalBeforTryClose-amount)
+		return false
+	}
+
 	return true
 }
 
@@ -279,102 +476,10 @@ func initDexP2P(ctx *testframework.TestFrameworkContext) error {
 	if err != nil {
 		return fmt.Errorf("DexP2P.Deploy error:%s", err)
 	}
-	err = DexP2P.Init(ctx, ctx.OntClient.Admin, 5)
+	err = DexP2P.Init(ctx, ctx.OntClient.Admin, 10)
 	if err != nil {
 		return fmt.Errorf("DexP2P.Init error:%s", err)
 	}
 	isDexP2PInit = true
 	return nil
 }
-
-//
-//func TestOntDexInter(ctx *testframework.TestFrameworkContext) bool {
-//	if !deployDexFund(ctx) {
-//		return false
-//	}
-//	admin := ctx.OntClient.Admin
-//	assetName := "TS01"
-//	assetPrecise := byte(8)
-//	assetType := Token
-//	recordType := UTXO
-//	asset := ctx.Ont.CreateAsset(assetName, assetPrecise, assetType, recordType)
-//	totalAmount := 1000000
-//
-//	err := RegisterAsset(ctx, asset, totalAmount, admin, admin)
-//	if err != nil {
-//		ctx.LogError("RegisterAsset error:%s", err)
-//		ctx.FailNow()
-//		return false
-//	}
-//	assetId := ctx.OntAsset.GetAssetId(assetName)
-//
-//	if !dexFundInit(ctx, assetId.ToArray(), admin) {
-//		return false
-//	}
-//
-//	buyer := ctx.OntClient.Account1
-//	amount := 1000
-//	err = IssueAsset(ctx, assetId, admin, buyer, amount)
-//	if err != nil {
-//		ctx.LogError("IssueAsset error:%s", err)
-//		ctx.FailNow()
-//		return false
-//	}
-//
-//	if !fundDeposit(ctx, assetId, buyer, amount) {
-//		return false
-//	}
-//
-//	//if !setFundCaller(ctx, admin, DExProtoCodeHash){
-//	//	return false
-//	//}
-//	if !deployDexProto(ctx) {
-//		return false
-//	}
-//	if !dexProtoInit(ctx, admin) {
-//		return false
-//	}
-//	if !addProtoCaller(ctx, admin, DEXP2PCodeHashReverse) {
-//		return false
-//	}
-//	if !deployDexP2P(ctx) {
-//		return false
-//	}
-//	if !dexP2PInit(ctx) {
-//		return false
-//	}
-//	seller := ctx.OntClient.Account2
-//	orderId := []byte(fmt.Sprint("%d", rand.Int31()))
-//	orderSig, err := crypto.Sign(buyer.PrivateKey, orderId)
-//	if err != nil {
-//		ctx.LogError("TestOntDexInter crypto.Sign error:%s", err)
-//		return false
-//	}
-//	amount = 10
-//	if !fundReceipt(ctx, buyer, amount) {
-//		return false
-//	}
-//	if !makeBuyOrder(ctx, orderSig, orderId, buyer, seller, amount) {
-//		return false
-//	}
-//	if !buyOrderComplete(ctx, orderId, buyer) {
-//		return false
-//	}
-//	orderId = []byte(fmt.Sprint("%d", rand.Int31()))
-//	orderSig, err = crypto.Sign(buyer.PrivateKey, orderId)
-//	if err != nil {
-//		ctx.LogError("TestOntDexInter crypto.Sign error:%s", err)
-//		return false
-//	}
-//	amount = 11
-//	if !fundReceipt(ctx, buyer, amount) {
-//		return false
-//	}
-//	if !makeBuyOrder(ctx, orderSig, orderId, buyer, seller, amount) {
-//		return false
-//	}
-//	if !buyOrderCancel(ctx, orderId, buyer) {
-//		return false
-//	}
-//	return true
-//}
