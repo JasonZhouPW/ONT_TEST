@@ -5,15 +5,16 @@ import (
 	"github.com/Ontology/core/contract"
 	"github.com/Ontology/smartcontract/types"
 	"time"
+	"github.com/Ontology/common"
 )
 
-func TestGetExecutingScriptHash(ctx *TestFrameworkContext) bool {
-	code := "51c56b6161682d53797374656d2e457865637574696f6e456e67696e652e476574457865637574696e67536372697074486173686c766b00527ac46203006c766b00c3616c7566"
+func TestExecutingScriptHash(ctx *TestFrameworkContext) bool {
+	code := "52c56b6151c56c766b00527ac46c766b00c30061682d53797374656d2e457865637574696f6e456e67696e652e476574457865637574696e6753637269707448617368c46c766b00c36c766b51527ac46203006c766b51c3616c7566"
 	_, err := ctx.Ont.DeploySmartContract(ctx.OntClient.Account1,
 		code,
 		[]contract.ContractParameterType{},
 		contract.ContractParameterType(contract.ByteArray),
-		"TestGetExecutingScriptHash",
+		"TestExecutingScriptHash",
 		"1.0",
 		"",
 		"",
@@ -21,30 +22,31 @@ func TestGetExecutingScriptHash(ctx *TestFrameworkContext) bool {
 		types.NEOVM,
 	)
 	if err != nil {
-		ctx.LogError("TestGetExecutingScriptHash DeploySmartContract error:%s", err)
+		ctx.LogError("TestExecutingScriptHash DeploySmartContract error:%s", err)
 		return false
 	}
 	//等待出块
 	_, err = ctx.Ont.WaitForGenerateBlock(30*time.Second, 1)
 	if err != nil {
-		ctx.LogError("TestGetExecutingScriptHash WaitForGenerateBlock error:%s", err)
+		ctx.LogError("TestExecutingScriptHash WaitForGenerateBlock error:%s", err)
 		return false
 	}
-	ctx.LogInfo("==: %x", ctx.OntClient.Account1.ProgramHash.ToArray())
 	res, err := ctx.Ont.InvokeSmartContract(
 		ctx.OntClient.Account1,
 		code,
 		[]interface{}{},
 	)
 	if err != nil {
-		ctx.LogError("TestGetExecutingScriptHash error:%s", err)
+		ctx.LogError("TestExecutingScriptHash error:%s", err)
 		return false
 	}
-	ctx.LogInfo("TestGetExecutingScriptHash res:%s", res)
+	ctx.LogInfo("TestExecutingScriptHash res:%s", res)
 
-	err = ctx.AssertToByteArray(res, ctx.OntClient.Account1.ProgramHash.ToArray())
+	c , _ :=common.HexToBytes(code)
+	codeHash, _ := common.ToCodeHash(c)
+	err = ctx.AssertToByteArray(res, codeHash.ToArray())
 	if err != nil {
-		ctx.LogError("TestGetExecutingScriptHash AssertToByteArray error:%s", err)
+		ctx.LogError("TestExecutingScriptHash AssertToByteArray error:%s", err)
 		return false
 	}
 	return true
@@ -60,10 +62,8 @@ public class A : SmartContract
 {
     public static object[] Main()
     {
-        object[] ret = new object[3];
-        ret[0] = ExecutionEngine.CallingScriptHash;
-        ret[1] = ExecutionEngine.EntryScriptHash;
-        ret[2] = ExecutionEngine.ExecutingScriptHash;
+        object[] ret = new object[1];
+        ret[0] = ExecutionEngine.ExecutingScriptHash;
         return ret;
     }
 }
