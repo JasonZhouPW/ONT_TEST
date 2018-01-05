@@ -2,10 +2,11 @@ package smartcontract
 
 import (
 	. "github.com/ONT_TEST/testframework"
+	"github.com/Ontology/common"
 	"github.com/Ontology/core/contract"
 	"github.com/Ontology/smartcontract/types"
 	"time"
-	"github.com/Ontology/common"
+	"encoding/hex"
 )
 
 func TestExecutingScriptHash(ctx *TestFrameworkContext) bool {
@@ -42,13 +43,28 @@ func TestExecutingScriptHash(ctx *TestFrameworkContext) bool {
 	}
 	ctx.LogInfo("TestExecutingScriptHash res:%s", res)
 
-	c , _ :=common.HexToBytes(code)
-	codeHash, _ := common.ToCodeHash(c)
-	err = ctx.AssertToByteArray(res, codeHash.ToArray())
-	if err != nil {
-		ctx.LogError("TestExecutingScriptHash AssertToByteArray error:%s", err)
+	v, ok := res.([]interface{})
+	if !ok {
+		ctx.LogError("TestExecutingScriptHash assert failed")
 		return false
 	}
+
+	hc, ok := v[0].(string)
+	if !ok {
+		ctx.LogError("TestExecutingScriptHash assert to string failed")
+		return false
+	}
+
+	c, _ := common.HexToBytes(code)
+	codeHash, _ := common.ToCodeHash(c)
+	
+	hcb, _ := hex.DecodeString(hc)
+
+	if string(codeHash.ToArray()) != string(hcb){
+		ctx.LogError("TestExecutingScriptHash res: %x != %x", hcb, codeHash.ToArray())
+		return false
+	}
+
 	return true
 }
 
