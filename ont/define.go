@@ -38,13 +38,13 @@ type UTXOTxInputInfo struct {
 
 type BalanceTxInputInfo struct {
 	AssetID     string
-	Value       string
+	Value       Fixed64
 	ProgramHash string
 }
 
 type TxoutputInfo struct {
 	AssetID     string
-	Value       string
+	Value       Fixed64
 	ProgramHash string
 }
 
