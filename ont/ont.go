@@ -698,6 +698,8 @@ func (this *Ontology) buildSmartContractParamInter(builder *neovm.ParamsBuilder,
 			builder.EmitPushInteger(big.NewInt(int64(v)))
 		case int64:
 			builder.EmitPushInteger(big.NewInt(int64(v)))
+		case Fixed64:
+			builder.EmitPushInteger(big.NewInt(int64(v.GetData())))
 		case uint64:
 			val := big.NewInt(0)
 			builder.EmitPushInteger(val.SetUint64(uint64(v)))
@@ -715,7 +717,7 @@ func (this *Ontology) buildSmartContractParamInter(builder *neovm.ParamsBuilder,
 			builder.EmitPushInteger(big.NewInt(int64(len(v))))
 			builder.Emit(neovm.PACK)
 		default:
-			return fmt.Errorf("unsupported param")
+			return fmt.Errorf("unsupported param:%s", v)
 		}
 	}
 	return nil
