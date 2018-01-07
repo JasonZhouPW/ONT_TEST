@@ -9,7 +9,7 @@ import (
 	"github.com/Ontology/core/transaction/utxo"
 	"github.com/Ontology/smartcontract/types"
 	"reflect"
-	"time"
+	//"time"
 )
 
 func init() {
@@ -25,15 +25,20 @@ func NewDexFund() *DexFundContract {
 	return &DexFundContract{}
 }
 
+func (this *DexFundContract) GetCode()string  {
+	return DexFundCode
+}
+
 func (this *DexFundContract) CodeHash() *common.Uint160 {
-	c, _ := common.HexToBytes(DexFundCode)
+	c, _ := common.HexToBytes(this.GetCode())
 	hashCode, _ := common.ToCodeHash(c)
 	return &hashCode
 }
 
 func (this *DexFundContract) Deploy(ctx *TestFrameworkContext, admin *account.Account) error {
+	ctx.LogInfo("DexFundContract Deploy")
 	_, err := ctx.Ont.DeploySmartContract(admin,
-		DexFundCode,
+		this.GetCode(),
 		[]contract.ContractParameterType{contract.String, contract.Array},
 		contract.ContractParameterType(contract.Array),
 		"DexFundContract",
@@ -47,17 +52,17 @@ func (this *DexFundContract) Deploy(ctx *TestFrameworkContext, admin *account.Ac
 		return err
 	}
 	//等待出块
-	_, err = ctx.Ont.WaitForGenerateBlock(30*time.Second, 1)
-	if err != nil {
-		return fmt.Errorf("WaitForGenerateBlock error:%s", err)
-	}
+	//_, err = ctx.Ont.WaitForGenerateBlock(30*time.Second, 1)
+	//if err != nil {
+	//	return fmt.Errorf("WaitForGenerateBlock error:%s", err)
+	//}
 	return nil
 }
 
 func (this *DexFundContract) Init(ctx *TestFrameworkContext, assetId []byte, admin *account.Account, caller []byte) error {
 	res, err := ctx.Ont.InvokeSmartContract(
 		admin,
-		DexFundCode,
+		this.GetCode(),
 		[]interface{}{"init", []interface{}{assetId, admin.ProgramHash.ToArray(), caller}},
 	)
 	if err != nil {
@@ -121,7 +126,7 @@ func (this *DexFundContract) Deposit(ctx *TestFrameworkContext, assetId common.U
 	}
 	ctx.LogInfo("deposit amount:%v", assAmount)
 	tx, err := ctx.Ont.BuildSmartContractInvokerTx(
-		DexFundCode,
+		this.GetCode(),
 		[]interface{}{"deposit", []interface{}{}},
 	)
 	if err != nil {
@@ -150,7 +155,7 @@ func (this *DexFundContract) Deposit(ctx *TestFrameworkContext, assetId common.U
 func (this *DexFundContract) BalanceOf(ctx *TestFrameworkContext, user *account.Account) (avail, total float64, err error) {
 	res, err := ctx.Ont.InvokeSmartContract(
 		user,
-		DexFundCode,
+		this.GetCode(),
 		[]interface{}{"balanceof", []interface{}{user.ProgramHash.ToArray()}},
 	)
 	if err != nil {
@@ -181,7 +186,7 @@ func (this *DexFundContract) BalanceOf(ctx *TestFrameworkContext, user *account.
 func (this *DexFundContract) SetCaller(ctx *TestFrameworkContext, admin *account.Account, caller []byte) error {
 	res, err := ctx.Ont.InvokeSmartContract(
 		admin,
-		DexFundCode,
+		this.GetCode(),
 		[]interface{}{"setcaller", []interface{}{caller}},
 	)
 	if err != nil {
@@ -201,7 +206,7 @@ func (this *DexFundContract) SetCaller(ctx *TestFrameworkContext, admin *account
 func (this *DexFundContract) ChangeAdmin(ctx *TestFrameworkContext, admin, newAdmin *account.Account) error {
 	res, err := ctx.Ont.InvokeSmartContract(
 		admin,
-		DexFundCode,
+		this.GetCode(),
 		[]interface{}{"changeadmin", []interface{}{newAdmin.ProgramHash.ToArray()}},
 	)
 	if err != nil {
@@ -221,7 +226,7 @@ func (this *DexFundContract) ChangeAdmin(ctx *TestFrameworkContext, admin, newAd
 func (this *DexFundContract) GetAdmin(ctx *TestFrameworkContext) (string, error) {
 	res, err := ctx.Ont.InvokeSmartContract(
 		ctx.OntClient.Admin,
-		DexFundCode,
+		this.GetCode(),
 		[]interface{}{"getadmin", []interface{}{}},
 	)
 	if err != nil {
@@ -245,7 +250,7 @@ func (this *DexFundContract) GetAdmin(ctx *TestFrameworkContext) (string, error)
 func (this *DexFundContract) CheckCallerPermission(ctx *TestFrameworkContext, caller []byte) (bool, error) {
 	res, err := ctx.Ont.InvokeSmartContract(
 		ctx.OntClient.Admin,
-		DexFundCode,
+		this.GetCode(),
 		[]interface{}{"checkcallerpermisssion", []interface{}{caller}},
 	)
 	if err != nil {
