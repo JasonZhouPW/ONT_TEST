@@ -234,7 +234,7 @@ namespace ONT_DEx
         //入金
         public static object[] Deposit()
         {
-            object[] ret = new object[15];
+            object[] ret = new object[3];
             ret[0] = Error_NO;
             byte[] assetId = Storage.Get(Storage.CurrentContext, AssetIdKey);
             if (assetId.Length == 0)
@@ -254,15 +254,9 @@ namespace ONT_DEx
             byte[] receiver = ExecutionEngine.ExecutingScriptHash;
             TransactionOutput[] outputs = tx.GetOutputs();
             BigInteger amount = 0;
-            ret[3] = receiver;
-            int i = 4;
+
             foreach (TransactionOutput output in outputs)
             {
-                ret[i] = output.ScriptHash;
-                i++;
-                ret[i] = receiver.Equals(output.ScriptHash);
-                i++;
-
                 if (receiver.Equals(output.ScriptHash))
                 {
                     amount += (BigInteger)output.Value;
