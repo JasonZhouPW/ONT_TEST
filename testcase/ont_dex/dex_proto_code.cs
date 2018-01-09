@@ -8,7 +8,7 @@ namespace ONT_DEx
 {
     public class Ont_Proto : SmartContract
     {
-        [Appcall("7f414d02bcecba8af3daaec395181870ab358c72")]
+        [Appcall("8c33bfdd1e3efe92bb279e15015177518d06ea9f")]
         public static extern object[] Ont_Fund(string operation, object[] args);
 
         public static readonly byte[] ProtoAdminKey = { 112, 114, 111, 116, 111, 97, 100, 109, 105, 110 };
@@ -38,7 +38,8 @@ namespace ONT_DEx
             {
                 if (operation == "init")
                 {
-                    if (args.Length != 2) {
+                    if (args.Length != 2)
+                    {
                         ret[0] = Error_ParamInvalidate;
                         return ret;
                     }
@@ -53,10 +54,11 @@ namespace ONT_DEx
                         ret[0] = Error_ParamInvalidate;
                         return ret;
                     }
+                    byte[] caller = ExecutionEngine.CallingScriptHash;
                     byte[] buyer = (byte[])args[0];
                     byte[] seller = (byte[])args[1];
                     BigInteger amount = (BigInteger)args[2];
-                    return OnMakeOrder(buyer, seller, amount);
+                    return OnMakeOrder(caller, buyer, seller, amount);
                 }
                 if (operation == "onordercomplete")
                 {
@@ -65,10 +67,11 @@ namespace ONT_DEx
                         ret[0] = Error_ParamInvalidate;
                         return ret;
                     }
+                    byte[] caller = ExecutionEngine.CallingScriptHash;
                     byte[] buyer = (byte[])args[0];
                     byte[] seller = (byte[])args[1];
                     BigInteger amount = (BigInteger)args[2];
-                    return OnOrderComplete(buyer, seller, amount);
+                    return OnOrderComplete(caller, buyer, seller, amount);
                 }
                 if (operation == "onordercancel")
                 {
@@ -77,19 +80,20 @@ namespace ONT_DEx
                         ret[0] = Error_ParamInvalidate;
                         return ret;
                     }
+                    byte[] caller = ExecutionEngine.CallingScriptHash;
                     byte[] buyer = (byte[])args[0];
                     byte[] seller = (byte[])args[1];
                     BigInteger amount = (BigInteger)args[2];
-                    return OnOrderCancel(buyer, seller, amount);
+                    return OnOrderCancel(caller, buyer, seller, amount);
                 }
                 if (operation == "changeadmin")
                 {
                     if (args.Length != 1)
-                {
-                    ret[0] = Error_ParamInvalidate;
-                    return ret;
-                }
-                byte[] newAdmin = (byte[])args[0];
+                    {
+                        ret[0] = Error_ParamInvalidate;
+                        return ret;
+                    }
+                    byte[] newAdmin = (byte[])args[0];
                     return ChangeAdmin(newAdmin);
                 }
                 if (operation == "getadmin")
@@ -108,7 +112,7 @@ namespace ONT_DEx
                 }
                 if (operation == "deletecaller")
                 {
-                    if (args.Length != 1)
+                if (args.Length != 1)
                 {
                     ret[0] = Error_ParamInvalidate;
                     return ret;
@@ -152,13 +156,11 @@ namespace ONT_DEx
             return ret;
         }
 
-        public static object[] OnMakeOrder(byte[] buyer, byte[] seller, BigInteger amount)
+        public static object[] OnMakeOrder(byte[] caller, byte[] buyer, byte[] seller, BigInteger amount)
         {
-            object[] ret = new object[3];
+            object[] ret = new object[1];
             ret[0] = Error_NO;
-            byte[] caller = ExecutionEngine.CallingScriptHash;
-            ret[1] = caller;
-            ret[2] = ExecutionEngine.ExecutingScriptHash;
+
             if (!checkCallerPermission(caller))
             {
                 ret[0] = Error_CallerInvalidate;
@@ -174,11 +176,11 @@ namespace ONT_DEx
             return ret;
         }
 
-        public static object[] OnOrderComplete( byte[] buyer, byte[] seller, BigInteger amount)
+        public static object[] OnOrderComplete(byte[] caller, byte[] buyer, byte[] seller, BigInteger amount)
         {
             object[] ret = new object[1];
             ret[0] = Error_NO;
-            byte[] caller = ExecutionEngine.CallingScriptHash;
+
             if (!checkCallerPermission(caller))
             {
                 ret[0] = Error_CallerInvalidate;
@@ -211,12 +213,11 @@ namespace ONT_DEx
             return ret;
         }
 
-        public static object[] OnOrderCancel(byte[] buyer, byte[] seller, BigInteger amount)
+        public static object[] OnOrderCancel(byte[]caller, byte[] buyer, byte[] seller, BigInteger amount)
         {
             object[] ret = new object[1];
             ret[0] = Error_NO;
 
-            byte[] caller = ExecutionEngine.CallingScriptHash;
             if (!checkCallerPermission(caller))
             {
                 ret[0] = Error_CallerInvalidate;

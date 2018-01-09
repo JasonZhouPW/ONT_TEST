@@ -736,7 +736,6 @@ func (this *Ontology) InvokeSmartContract(
 	account *account.Account,
 	smartContractCode string,
 	smartContractParams []interface{}) (interface{}, error) {
-
 	tx, err := this.BuildSmartContractInvokerTx(smartContractCode, smartContractParams)
 	if err != nil {
 		return nil, fmt.Errorf("buildSmartContractInvokerTx error:%s", err)
@@ -747,7 +746,7 @@ func (this *Ontology) InvokeSmartContract(
 
 func (this *Ontology) BuildSmartContractInvokerTx(
 	smartContractCode string,
-	smartContractParams []interface{}) (*transaction.Transaction, error){
+	smartContractParams []interface{}) (*transaction.Transaction, error) {
 	c, err := hex.DecodeString(smartContractCode)
 	if err != nil {
 		return nil, fmt.Errorf("hex.DecodeString code:%s error:%s", smartContractCode, err)
@@ -769,7 +768,7 @@ func (this *Ontology) BuildSmartContractInvokerTx(
 	return tx, nil
 }
 
-func (this *Ontology) InvokeSmartContractWithTx(account *account.Account, tx *transaction.Transaction)(interface{}, error) {
+func (this *Ontology) InvokeSmartContractWithTx(account *account.Account, tx *transaction.Transaction) (interface{}, error) {
 	wsClient := utils.NewWebSocketClient(this.getWSAddress())
 	recvCh, err := wsClient.Connet()
 	if err != nil {
@@ -823,7 +822,8 @@ func (this *Ontology) InvokeSmartContractWithTx(account *account.Account, tx *tr
 }
 
 func (this *Ontology) WSSendTransaction(ws *utils.WebSocketClient, signer *account.Account, tx *transaction.Transaction) error {
-	tx.Attributes = []*transaction.TxAttribute{{Usage: transaction.Script, Data: signer.ProgramHash.ToArray()}}
+	attr := &transaction.TxAttribute{Usage: transaction.Script, Data: signer.ProgramHash.ToArray()}
+	tx.Attributes = append(tx.Attributes, attr)
 	err := this.SignTransaction(tx, []*account.Account{signer})
 	if err != nil {
 		return fmt.Errorf("SignTransaction error:%s", err)
