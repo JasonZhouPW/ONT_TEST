@@ -13,6 +13,10 @@ import (
 	"time"
 )
 
+var (
+	assetName      = "dex"
+)
+
 func GetErrorCode(res interface{}) (int, error) {
 	v, err := GetRetValue(res, 0, reflect.Int)
 	if err != nil {
@@ -80,4 +84,29 @@ func IssueAsset(ctx *TestFrameworkContext, assetId common.Uint256, controller, t
 		return fmt.Errorf("WaitForGenerateBlock error:%s", err)
 	}
 	return nil
+}
+
+func InitAsset(ctx *TestFrameworkContext, toAccount *account.Account) error {
+	admin := ctx.OntClient.Admin
+	assetPrecise := byte(8)
+	assetType := asset.Token
+	recordType := asset.UTXO
+	asset := ctx.Ont.CreateAsset(assetName, assetPrecise, assetType, recordType)
+	totalAmount := 1000000
+	err := RegisterAsset(ctx, asset, totalAmount, admin, admin)
+	if err != nil {
+		return fmt.Errorf("RegisterAsset error:%s", err)
+	}
+
+	assetId := ctx.OntAsset.GetAssetId(assetName)
+	amount := 10000
+	err = IssueAsset(ctx, assetId, admin, toAccount, amount)
+	if err != nil {
+		return fmt.Errorf("IssueAsset to Account%v error:%s",toAccount, err)
+	}
+	return nil
+}
+
+func GetAssetName()string{
+	return assetName
 }
