@@ -3,14 +3,12 @@ package ont_dex
 import (
 	"fmt"
 	"github.com/ONT_TEST/testframework"
-	. "github.com/Ontology/core/asset"
 	"github.com/Ontology/crypto"
 	"math/rand"
 	"time"
 )
 
 var (
-	assetName      = "dex"
 	isOntDexInit   = false
 )
 
@@ -57,11 +55,6 @@ func TestDexFundDeposit(ctx *testframework.TestFrameworkContext) bool {
 		ctx.LogError("TestDexFundDeposit error, Total Delta :%v != %v ", delta, amount)
 		return false
 	}
-	DexFund.BalanceOf(ctx, ctx.OntClient.Account1)
-	DexFund.BalanceOf(ctx, ctx.OntClient.Account1)
-	DexFund.BalanceOf(ctx, ctx.OntClient.Account1)
-	DexFund.BalanceOf(ctx, ctx.OntClient.Account1)
-	DexFund.BalanceOf(ctx, ctx.OntClient.Account1)
 	return true
 }
 
@@ -415,7 +408,7 @@ func initTestOntDex(ctx *testframework.TestFrameworkContext) error {
 	if isOntDexInit {
 		return nil
 	}
-	err := initAsset(ctx)
+	err := InitAsset(ctx, ctx.OntClient.Account1)
 	if err != nil {
 		return err
 	}
@@ -453,26 +446,5 @@ func initTestOntDex(ctx *testframework.TestFrameworkContext) error {
 		return fmt.Errorf("DexP2P.Init error:%s", err)
 	}
 	isOntDexInit = true
-	return nil
-}
-
-func initAsset(ctx *testframework.TestFrameworkContext) error {
-	admin := ctx.OntClient.Admin
-	assetPrecise := byte(8)
-	assetType := Token
-	recordType := UTXO
-	asset := ctx.Ont.CreateAsset(assetName, assetPrecise, assetType, recordType)
-	totalAmount := 1000000
-	err := RegisterAsset(ctx, asset, totalAmount, admin, admin)
-	if err != nil {
-		return fmt.Errorf("RegisterAsset error:%s", err)
-	}
-
-	assetId := ctx.OntAsset.GetAssetId(assetName)
-	amount := 10000
-	err = IssueAsset(ctx, assetId, admin, ctx.OntClient.Account1, amount)
-	if err != nil {
-		return fmt.Errorf("IssueAsset to Account1 error:%s", err)
-	}
 	return nil
 }
