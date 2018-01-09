@@ -12,6 +12,7 @@ import (
 	//"github.com/ONT_TEST/testcase/ont_dex"
 	//"github.com/ONT_TEST/testcase/vm/datatype"
 	//"github.com/ONT_TEST/testcase/smartcontract/api"
+	//"github.com/ONT_TEST/testcase/smartcontract/api"
 	"github.com/ONT_TEST/testcase/ont_dex"
 )
 

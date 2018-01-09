@@ -29,7 +29,7 @@ namespace ONT_DEx
         public static readonly int Error_DuplicateInit = 3009;
         public static readonly int Error_UnInit = 3010;
 
-        [Appcall("d06bb85d525d977d0a9702a08f841528723df0e9")]
+        [Appcall("96d74db08b56e2684d932193632faffbbeca3e42")]
         public static extern object[] Ont_Proto(string operation, object[] args);
 
         public static object[] Main(string operation, params object[] args)
@@ -186,13 +186,13 @@ namespace ONT_DEx
             Storage.Put(Storage.CurrentContext, oSellerKey, seller);
             Storage.Put(Storage.CurrentContext, oTimeKey, orderTime.AsByteArray());
 
-            //object[] param = { buyer, seller, amount };
-            //object[] retp = Ont_Proto("onmakeorder", param);
-            //int errorCode = (int)retp[0];
-            //if (errorCode != Error_NO)
-            //{
-            //    return retp;
-            //}
+            object[] param = { buyer, seller, amount };
+            object[] retp = Ont_Proto("onmakeorder", param);
+            int errorCode = (int)retp[0];
+            if (errorCode != Error_NO)
+            {
+                return retp;
+            }
             return ret;
         }
 
@@ -287,7 +287,7 @@ namespace ONT_DEx
 
         public static object[] SellerTryCloseOrder(byte[] orderId, byte[] seller)
         {
-            object[] ret = new object[3];
+            object[] ret = new object[1];
             ret[0] = Error_NO;
             if (!Runtime.CheckWitness(seller))
             {
@@ -314,8 +314,6 @@ namespace ONT_DEx
             Header header = Blockchain.GetHeader(Blockchain.GetHeight());
             BigInteger timeNow = (BigInteger)header.Timestamp;
             BigInteger lockTime = (BigInteger)GetOrderLockTime()[1];
-            ret[1] = timeNow;
-            ret[2] = lockTime;
             if ((timeNow - oTime) < lockTime)
             {
                 //还没到解锁时间

@@ -90,9 +90,10 @@ namespace ONT_DEx
                         ret[0] = Error_ParamInvalidate;
                         return ret;
                     }
+                    byte[] caller = ExecutionEngine.CallingScriptHash;
                     byte[] buyer = (byte[])args[0];
                     BigInteger amount = (BigInteger)args[1];
-                    return Lock(buyer, amount);
+                    return Lock(caller, buyer, amount);
                 }
                 if (operation == "unlock")
                 {
@@ -101,9 +102,10 @@ namespace ONT_DEx
                         ret[0] = Error_ParamInvalidate;
                         return ret;
                     }
+                    byte[] caller = ExecutionEngine.CallingScriptHash;
                     byte[] buyer = (byte[])args[0];
                     BigInteger amount = (BigInteger)args[1];
-                    return Unlock(buyer, amount);
+                    return Unlock(caller, buyer, amount);
                 }
                 if (operation == "balanceof")
                 {
@@ -122,9 +124,10 @@ namespace ONT_DEx
                         ret[0] = Error_ParamInvalidate;
                         return ret;
                     }
+                    byte[] caller = ExecutionEngine.CallingScriptHash;
                     byte[] reciver = (byte[])args[0];
                     BigInteger amount = (BigInteger)args[1];
-                    return Receipt(reciver, amount);
+                    return Receipt(caller, reciver, amount);
                 }
                 if (operation == "payment")
                 {
@@ -133,9 +136,10 @@ namespace ONT_DEx
                         ret[0] = Error_ParamInvalidate;
                         return ret;
                     }
+                    byte[] caller = ExecutionEngine.CallingScriptHash;
                     byte[] payer = (byte[])args[0];
                     BigInteger amount = (BigInteger)args[1];
-                    return Payment(payer, amount);
+                    return Payment(caller, payer, amount);
                 }
                 if (operation == "checkcallerpermisssion")
                 {
@@ -278,7 +282,7 @@ namespace ONT_DEx
             return ret;
         }
 
-        public static object[] Receipt(byte[] reciver, BigInteger amount)
+        public static object[] Receipt(byte[] caller, byte[] reciver, BigInteger amount)
         {
             object[] ret = new object[1];
             ret[0] = Error_NO;
@@ -288,7 +292,7 @@ namespace ONT_DEx
                 return ret;
             }
 
-            int errorCode = checkCallerPermission();
+            int errorCode = checkCallerPermission(caller);
             if (errorCode != Error_NO)
             {
                 ret[0] = errorCode;
@@ -303,7 +307,7 @@ namespace ONT_DEx
             return ret;
         }
 
-        public static object[] Payment( byte[] payer, BigInteger amount)
+        public static object[] Payment(byte[] caller, byte[] payer, BigInteger amount)
         {
             object[] ret = new object[1];
             ret[0] = Error_NO;
@@ -312,7 +316,7 @@ namespace ONT_DEx
                 ret[0] = Error_ParamInvalidate;
                 return ret;
             }
-            int errorCode = checkCallerPermission();
+            int errorCode = checkCallerPermission(caller);
             if (errorCode != Error_NO)
             {
                 ret[0] = errorCode;
@@ -335,7 +339,7 @@ namespace ONT_DEx
         }
 
         //锁仓
-        public static object[] Lock(byte[] buyer, BigInteger amount)
+        public static object[] Lock(byte[] caller, byte[] buyer, BigInteger amount)
         {
             object[] ret = new object[1];
             ret[0] = Error_NO;
@@ -345,7 +349,7 @@ namespace ONT_DEx
                 return ret;
             }
 
-            int errorCode = checkCallerPermission();
+            int errorCode = checkCallerPermission(caller);
             if (errorCode != Error_NO)
             {
                 ret[0] = errorCode;
@@ -363,7 +367,7 @@ namespace ONT_DEx
         }
 
         //解锁
-        public static object[] Unlock(byte[] buyer, BigInteger amount)
+        public static object[] Unlock(byte[] caller, byte[] buyer, BigInteger amount)
         {
             object[] ret = new object[1];
             ret[0] = Error_NO;
@@ -373,7 +377,7 @@ namespace ONT_DEx
                 return ret;
             }
 
-            int errorCode = checkCallerPermission();
+            int errorCode = checkCallerPermission(caller);
             if (errorCode != Error_NO)
             {
                 ret[0] = errorCode;
@@ -424,15 +428,15 @@ namespace ONT_DEx
             return ret;
         }
 
-        private static int checkCallerPermission()
+        private static int checkCallerPermission(byte[] caller)
         {
-            byte[] caller = Storage.Get(Storage.CurrentContext, FundCallerKey);
-            if (caller.Length == 0)
+            byte[] c = Storage.Get(Storage.CurrentContext, FundCallerKey);
+            if (c.Length == 0)
             {
                 return Error_NO;
             }
 
-            if (ExecutionEngine.CallingScriptHash != caller)
+            if (caller != c)
             {
                 return Error_CallerInvalidate;
             }

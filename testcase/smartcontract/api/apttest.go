@@ -61,9 +61,10 @@ func TestAPI() {
 	//triggetype
 	//TFramework.RegTestCase("TestTriggerType",smartcontract.TestTriggerType)
 	//TFramework.RegTestCase("TestCallContractStatic", smartcontract.TestCallContractStatic)
-	TFramework.RegTestCase("TestCallingScriptHash", smartcontract.TestCallingScriptHash)
+	//TFramework.RegTestCase("TestCallingScriptHash", smartcontract.TestCallingScriptHash)
 	//TFramework.RegTestCase("TestCheckWitness", smartcontract.TestCheckWitness)
-	TFramework.RegTestCase("TestExecutingScriptHash", smartcontract.TestExecutingScriptHash)
-	TFramework.RegTestCase("TestEntryScriptHash", smartcontract.TestEntryScriptHash)
+	//TFramework.RegTestCase("TestExecutingScriptHash", smartcontract.TestExecutingScriptHash)
+	//TFramework.RegTestCase("TestEntryScriptHash", smartcontract.TestEntryScriptHash)
+	TFramework.RegTestCase("TestExecutionEngine", smartcontract.TestExecutionEngine)
 }
 
