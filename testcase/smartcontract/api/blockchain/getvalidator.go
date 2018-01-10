@@ -56,7 +56,7 @@ func TestValidators(ctx *testframework.TestFrameworkContext) bool {
 		return false
 	}
 	fmt.Println("res", reflect.TypeOf(res))
-	//hexstr, err := common.HexToBytes(res.([]interface {}))
+	//hexstr, err := helper.HexToBytes(res.([]interface {}))
 	//if err != nil {
 	//	ctx.LogError("TestValidators HexToBytes error:%s", err)
 	//	return false

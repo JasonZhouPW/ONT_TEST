@@ -3,7 +3,7 @@ package ontid
 import (
 	"fmt"
 	"github.com/ONT_TEST/testframework"
-	// "github.com/Ontology/common"
+	// "github.com/Ontology/helper"
 	"github.com/Ontology/core/contract"
 	"github.com/Ontology/common"
 	"github.com/Ontology/smartcontract/types"

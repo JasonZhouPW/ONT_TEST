@@ -4,15 +4,14 @@ import (
 	. "github.com/ONT_TEST/testframework"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/header"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/block"
-	//"github.com/ONT_TEST/testcase/smartcontract/api/block"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/account"
-	//"github.com/ONT_TEST/testcase/smartcontract/api/asset"
+	"github.com/ONT_TEST/testcase/smartcontract/api/asset"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/attribute"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/input"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/blockchain"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/account"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/smartcontract"
-	"github.com/ONT_TEST/testcase/smartcontract/api/transaction"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/transaction"
 )
 
 func TestAPI() {
@@ -45,13 +44,9 @@ func TestAPI() {
 	//TFramework.RegTestCase("TestGetScriptHash", account.TestGetScriptHash)
 
 	//asset
-	//TFramework.RegTestCase("TestGetAdmin", asset.TestGetAdmin)
-	//TFramework.RegTestCase("TestGetAmount", asset.TestGetAmount)
-	//TFramework.RegTestCase("TestGetAssetId", asset.TestGetAssetId)
-	//TFramework.RegTestCase("TestGetAssetType", asset.TestGetAssetType)
-	//TFramework.RegTestCase("TestGetAvailable", asset.TestGetAvailable)
-	//TFramework.RegTestCase("TestGetOwner", asset.TestGetOwner)
-	//TFramework.RegTestCase("TestGetPrecision", asset.TestGetPrecision)
+	//TFramework.RegTestCase("TestAssetCreate", asset.TestAssetCreate)
+	//TFramework.RegTestCase("TestAsset", asset.TestAsset)
+	TFramework.RegTestCase("TestRenew", asset.TestRenew)
 
 	//attribute
 	//TFramework.RegTestCase("TestGetAttributeData", attribute.TestGetAttributeData)
@@ -73,8 +68,8 @@ func TestAPI() {
 	//TFramework.RegTestCase("TestGetInputs", transaction.TestGetInputs)
 	//TFramework.RegTestCase("TestGetOutputs", transaction.TestGetOutputs)
 	//TFramework.RegTestCase("TestGetReference", transaction.TestGetReference)
-	TFramework.RegTestCase("TestGetTxType", transaction.TestGetTxType)
-	TFramework.RegTestCase("TestGetTxHash", transaction.TestGetTxHash)
+	//TFramework.RegTestCase("TestGetTxType", transaction.TestGetTxType)
+	//TFramework.RegTestCase("TestGetTxHash", transaction.TestGetTxHash)
 }
 
 

@@ -47,6 +47,7 @@ func TestGetBalance(ctx *testframework.TestFrameworkContext) bool {
 		ctx.LogError("TestGetBalance WaitForGenerateBlock error:%s", err)
 		return false
 	}
+
 	res, err := ctx.Ont.InvokeSmartContract(
 		ctx.OntClient.Account1,
 		code,

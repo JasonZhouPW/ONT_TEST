@@ -31,6 +31,7 @@ import (
 	"strings"
 	"sync/atomic"
 	"time"
+	"math"
 )
 
 func init() {
@@ -497,12 +498,21 @@ func (this *Ontology) WaitForGenerateBlock(timeout time.Duration, blockCount ...
 	return ok, nil
 }
 
-func (this *Ontology) MakeAssetAmount(rawAmont float64) Fixed64 {
-	return Fixed64(rawAmont * 100000000)
+func (this *Ontology) MakeAssetAmount(rawAmont float64, precision ... byte) Fixed64 {
+	pre := byte(8)
+	if len(precision) != 0 {
+		pre = precision[0]
+	}
+
+	return Fixed64(rawAmont * math.Pow(10, float64(pre)))
 }
 
-func (this *Ontology) GetRawAssetAmount(assetAmount Fixed64) float64 {
-	return float64(assetAmount) / 100000000
+func (this *Ontology) GetRawAssetAmount(assetAmount Fixed64, precision ... byte) float64 {
+	pre := byte(8)
+	if len(precision) != 0 {
+		pre = precision[0]
+	}
+	return float64(assetAmount) / math.Pow(10, float64(pre))
 }
 
 func (this *Ontology) GetAccountProgramHash(account *account.Account) (Uint160, error) {
