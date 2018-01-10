@@ -40,7 +40,8 @@ func  TestGetInputs(ctx *testframework.TestFrameworkContext)bool{
 	}
 
 	tx, err := ctx.Ont.GetTransaction(txHash)
-	d, _ := json.Marshal(tx.UTXOInputs)
+	txIntputs :=tx.UTXOInputs
+	d, _ := json.Marshal(txIntputs)
 	ctx.LogInfo("TestGetInputs Inputs:%s", d)
 
 	res, err := ctx.Ont.InvokeSmartContract(
@@ -53,7 +54,36 @@ func  TestGetInputs(ctx *testframework.TestFrameworkContext)bool{
 		return false
 	}
 
-	ctx.LogInfo("TestGetInputs res:%v", res)
+	ret, ok := res.([]interface{})
+	if !ok {
+		ctx.LogError("TestGetInputs asset []interface error")
+		return false
+	}
+
+	for i, item := range ret{
+		input, ok := item.([]interface{})
+		if !ok {
+			ctx.LogError("TestGetInputs asset item to []interface error")
+			return false
+		}
+
+		txInput := txIntputs[i]
+		err := ctx.AssertToByteArray(input[0], txInput.ReferTxID.ToArray())
+		if err != nil {
+			ctx.LogError("TestGetInputs AssertToByteArray ReferTxID error:%s", err)
+			return false
+		}
+
+		err = ctx.AssertToInt(input[1], int(txInput.ReferTxOutputIndex))
+		if err != nil {
+			ctx.LogError("TestGetInputs AssertToInt ReferTxOutputIndex error:%s", err)
+			return false
+		}
+
+		ctx.LogInfo("TestGetInputs %+v", input)
+	}
+
+
 	return true
 }
 /*

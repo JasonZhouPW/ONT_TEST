@@ -69,12 +69,12 @@ func TestAPI() {
 	//TFramework.RegTestCase("TestExecutionEngine", smartcontract.TestExecutionEngine)
 
 	//Transction
-	TFramework.RegTestCase("TestGetAttributes", transaction.TestGetAttributes)
-	TFramework.RegTestCase("TestGetInputs", transaction.TestGetInputs)
-	TFramework.RegTestCase("TestGetOutputs", transaction.TestGetOutputs)
-	TFramework.RegTestCase("TestGetReference", transaction.TestGetReference)
-	//TFramework.RegTestCase("TestGetTxType", transaction.TestGetTxType)
-	//TFramework.RegTestCase("TestGetTxHash", transaction.TestGetTxHash)
+	//TFramework.RegTestCase("TestGetAttributes", transaction.TestGetAttributes)
+	//TFramework.RegTestCase("TestGetInputs", transaction.TestGetInputs)
+	//TFramework.RegTestCase("TestGetOutputs", transaction.TestGetOutputs)
+	//TFramework.RegTestCase("TestGetReference", transaction.TestGetReference)
+	TFramework.RegTestCase("TestGetTxType", transaction.TestGetTxType)
+	TFramework.RegTestCase("TestGetTxHash", transaction.TestGetTxHash)
 }
 
 

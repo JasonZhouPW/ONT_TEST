@@ -379,31 +379,6 @@ func TestSellerTryCloseOrder(ctx *testframework.TestFrameworkContext) bool {
 	return true
 }
 
-//func TestFundAdmin(ctx *testframework.TestFrameworkContext) bool {
-//	oldAdmin, err := DexFund.GetAdmin(ctx)
-//	if err != nil {
-//		ctx.LogError("TestFundAdmin GetAdmin error:%s", err)
-//		return false
-//	}
-//
-//	_, err = ctx.Ont.WaitForGenerateBlock(30*time.Second)
-//	if err != nil{
-//		ctx.LogError("TestFundAdmin WaitForGenerateBlock error:%s", err)
-//		return false
-//	}
-//	newAdmin := ctx.OntClient.Account1
-//	err = DexFund.ChangeAdmin(ctx, oldAdmin, newAdmin)
-//	if err != nil {
-//		ctx.LogError("TestFundAdmin ChangeAdmin error:%s", err)
-//		return false
-//	}
-//	_, err = ctx.Ont.WaitForGenerateBlock(30*time.Second)
-//	if err != nil{
-//		ctx.LogError("TestFundAdmin WaitForGenerateBlock error:%s", err)
-//		return false
-//	}
-//}
-
 func initTestOntDex(ctx *testframework.TestFrameworkContext) error {
 	if isOntDexInit {
 		return nil

@@ -1,14 +1,14 @@
 package transaction
 
 import (
+	"encoding/json"
 	"github.com/ONT_TEST/testframework"
 	"github.com/Ontology/core/contract"
 	"github.com/Ontology/smartcontract/types"
 	"time"
-	"encoding/json"
 )
 
-func  TestGetOutputs(ctx *testframework.TestFrameworkContext)bool{
+func TestGetOutputs(ctx *testframework.TestFrameworkContext) bool {
 	txHash, err := getTransferTransaction(ctx, ctx.OntClient.Account1, ctx.OntClient.Account2)
 	if err != nil {
 		ctx.LogError("initTransaction error:%s", err)
@@ -40,7 +40,8 @@ func  TestGetOutputs(ctx *testframework.TestFrameworkContext)bool{
 	}
 
 	tx, err := ctx.Ont.GetTransaction(txHash)
-	d, _ := json.Marshal(tx.Outputs)
+	txOutputs := tx.Outputs
+	d, _ := json.Marshal(txOutputs)
 	ctx.LogInfo("TestGetOutputs Outputs:%s", d)
 
 	res, err := ctx.Ont.InvokeSmartContract(
@@ -53,7 +54,36 @@ func  TestGetOutputs(ctx *testframework.TestFrameworkContext)bool{
 		return false
 	}
 
-	ctx.LogInfo("TestGetOutputs res:%v", res)
+	ret, ok := res.([]interface{})
+	if !ok {
+		ctx.LogError("TestGetOutputs asset res to []interface error")
+		return false
+	}
+
+	for i, item := range ret {
+		output, ok := item.([]interface{})
+		if !ok {
+			ctx.LogError("TestGetOutputs asset item to []interface error")
+			return false
+		}
+		txOutput := txOutputs[i]
+		err := ctx.AssertToByteArray(output[0], txOutput.AssetID.ToArray())
+		if err != nil {
+			ctx.LogError("TestGetOutputs AssetID AssertToByteArray error:%s", err)
+			return false
+		}
+		err = ctx.AssertToByteArray(output[1], txOutput.ProgramHash.ToArray())
+		if err != nil {
+			ctx.LogError("TestGetOutputs ProgramHash AssertToByteArray error:%s", err)
+			return false
+		}
+		err = ctx.AssertToInt(output[2], int(txOutput.Value))
+		if err != nil {
+			ctx.LogError("TestGetOutputs Value AssertToInt error:%s", err)
+			return false
+		}
+	}
+
 	return true
 }
 

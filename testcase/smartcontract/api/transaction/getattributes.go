@@ -1,11 +1,11 @@
 package transaction
 
 import (
+	"encoding/json"
 	"github.com/ONT_TEST/testframework"
 	"github.com/Ontology/core/contract"
 	"github.com/Ontology/smartcontract/types"
 	"time"
-	"encoding/json"
 )
 
 func TestGetAttributes(ctx *testframework.TestFrameworkContext) bool {
@@ -39,7 +39,8 @@ func TestGetAttributes(ctx *testframework.TestFrameworkContext) bool {
 	}
 
 	tx, err := ctx.Ont.GetTransaction(txHash)
-	d, _ := json.Marshal(tx.Attributes)
+	txAttrs := tx.Attributes
+	d, _ := json.Marshal(txAttrs)
 	ctx.LogInfo("TestGetAttributes Attributes:%s", d)
 
 	res, err := ctx.Ont.InvokeSmartContract(
@@ -52,12 +53,32 @@ func TestGetAttributes(ctx *testframework.TestFrameworkContext) bool {
 		return false
 	}
 
-	ctx.LogInfo("TestGetAttributes res:%v", res)
-	//err = ctx.AssertToByteArray(res, hash160(input))
-	//if err != nil {
-	//	ctx.LogError("TestHash160 test failed %s", err)
-	//	return false
-	//}
+	ret, ok := res.([]interface{})
+	if !ok {
+		ctx.LogError("TestGetAttributes asset res []interface error")
+		return false
+	}
+
+	for i, item := range ret {
+		attr, ok := item.([]interface{})
+		if !ok {
+			ctx.LogError("TestGetAttributes asset item []interface error")
+			return false
+		}
+
+		txAttr := txAttrs[i]
+		err := ctx.AssertToInt(attr[0], int(txAttr.Usage))
+		if err != nil {
+			ctx.LogError("TestGetAttributes Usage AssertToInt error:%s", err)
+			return false
+		}
+
+		err = ctx.AssertToByteArray(attr[1], txAttr.Data)
+		if err != nil {
+			ctx.LogError("TestGetAttributes Data AssertToByteArray error:%s", err)
+			return false
+		}
+	}
 	return true
 }
 
