@@ -43,6 +43,7 @@ const (
 	ONT_SENDTRANSACTION     = "sendrawtransaction"
 	ONT_HEARTBEAT           = "heartbeat"
 	ONT_SMARTCONTRACTINVOKE = "InvokeTransaction"
+	ONT_NOTIFY              = "Notify"
 )
 
 type ONTJsonRpcRes struct {
@@ -125,3 +126,4 @@ func (this *ONTJsonRpcRes) HandleResult() ([]byte, error) {
 	}
 	return []byte(res), nil
 }
+

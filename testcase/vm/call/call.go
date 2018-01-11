@@ -1,4 +1,4 @@
-package smartcontract
+package call
 
 import (
 	. "github.com/ONT_TEST/testframework"

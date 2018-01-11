@@ -4,7 +4,7 @@ package verifysignature
 //	"github.com/ONT_TEST/testframework"
 //	"github.com/Ontology/core/contract"
 //	"github.com/Ontology/crypto"
-//	"github.com/Ontology/smartcontract/types"
+//	"github.com/Ontology/executionengine/types"
 //	"time"
 //)
 //

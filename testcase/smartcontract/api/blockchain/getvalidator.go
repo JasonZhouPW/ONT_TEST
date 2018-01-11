@@ -24,7 +24,7 @@ class A : SmartContract
  */
 
 func TestValidators(ctx *testframework.TestFrameworkContext) bool {
-	code := "52c56b6161681c4e656f2e426c6f636b636861696e2e47657456616c696461746f72736c766b00527ac46c766b00c36c766b51527ac46203006c766b51c3616c7566"
+	code := "51c56b6161681c4e656f2e426c6f636b636861696e2e47657456616c696461746f72736c766b00527ac46203006c766b00c3616c7566"
 	_, err := ctx.Ont.DeploySmartContract(ctx.OntClient.Account1,
 		code,
 		[]contract.ContractParameterType{},

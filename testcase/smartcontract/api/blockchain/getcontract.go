@@ -1,37 +1,49 @@
 package blockchain
 
 import (
-	"time"
-	"github.com/Ontology/core/contract"
-	"github.com/Ontology/smartcontract/types"
 	"github.com/ONT_TEST/testframework"
 	"github.com/Ontology/common"
-	"github.com/Ontology/core/states"
+	"github.com/Ontology/core/contract"
+	"github.com/Ontology/smartcontract/types"
+	"time"
+	"encoding/hex"
 	"bytes"
 )
 
 /**
+
 using Neo.SmartContract.Framework;
 using Neo.SmartContract.Framework.Services.Neo;
 
 class A : SmartContract
 {
-    public static object Main()
+    public static string Main()
     {
-        byte[] contractid = { 174, 75, 194, 130, 188, 134, 82, 102, 32, 155, 40, 243, 113, 252, 30, 177, 247, 188, 14, 116 };
-        Contract ast = Blockchain.GetContract(contractid);
-        return ast;
+        return "Hello World!";
     }
 }
- */
+
+code = 51c56b610c48656c6c6f20576f726c64216c766b00527ac46203006c766b00c3616c7566
+------------------------------------------------------------
+
+using Neo.SmartContract.Framework;
+using Neo.SmartContract.Framework.Services.Neo;
+class B : SmartContract
+{
+    public static byte[] Main(byte[] codeHash)
+    {
+        return Blockchain.GetContract(codeHash).Script;
+    }
+}
+*/
 
 func TestGetContract(ctx *testframework.TestFrameworkContext) bool {
-	code := "53c56b14ae4bc282bc865266209b28f371fc1eb1f7bc0e746c766b00527ac46c766b00c361681a4e656f2e426c6f636b636861696e2e476574436f6e74726163746c766b51527ac46c766b51c36c766b52527ac46203006c766b52c3616c7566"
+	code := "52c56b6c766b00527ac4616c766b00c361681a4e656f2e426c6f636b636861696e2e476574436f6e74726163746168164e656f2e436f6e74726163742e4765745363726970746c766b51527ac46203006c766b51c3616c7566"
 	_, err := ctx.Ont.DeploySmartContract(ctx.OntClient.Account1,
 		code,
-		[]contract.ContractParameterType{},
-		contract.ContractParameterType(contract.InteropInterface),
-		"TestGetAccount",
+		[]contract.ContractParameterType{contract.ByteArray},
+		contract.ContractParameterType(contract.ByteArray),
+		"TestGetContract",
 		"1.0",
 		"",
 		"",
@@ -48,26 +60,29 @@ func TestGetContract(ctx *testframework.TestFrameworkContext) bool {
 		ctx.LogError("TestGetContract WaitForGenerateBlock error:%s", err)
 		return false
 	}
+
+	codeA := "51c56b610c48656c6c6f20576f726c64216c766b00527ac46203006c766b00c3616c7566"
+	c, _ := common.HexToBytes(codeA)
+	codeHash, _ := common.ToCodeHash(c)
 	res, err := ctx.Ont.InvokeSmartContract(
 		ctx.OntClient.Account1,
 		code,
-		[]interface{}{},
+		[]interface{}{codeHash.ToArray()},
 	)
 	if err != nil {
 		ctx.LogError("TestGetContract InvokeSmartContract error:%s", err)
 		return false
 	}
-	hexstr, err := common.HexToBytes(res.(string))
-	if err != nil {
-		ctx.LogError("TestGetContract HexToBytes error:%s", err)
+
+	ret, ok := res.(string)
+	if !ok {
+		ctx.LogError("TestGetContract res asset to string failed")
 		return false
 	}
-	contract := new(states.ContractState)
-	bf := bytes.NewBuffer(hexstr)
-	if err := contract.Deserialize(bf); err != nil {
-		ctx.LogError("TestGetContract HexToBytes error:%s", err)
-		return false
+
+	data, _ := hex.DecodeString(ret)
+	if !bytes.EqualFold(data, codeHash.ToArray()){
+		ctx.LogError("TestGetContract %x != %x", data, codeHash.ToArray())
 	}
-	ctx.LogError("TestGetContract :%+v ", contract)
 	return true
 }

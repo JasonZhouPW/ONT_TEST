@@ -63,6 +63,17 @@ func (this *TestFrameworkContext) AssertToInt(value interface{}, expect int) err
 	return nil
 }
 
+func (this *TestFrameworkContext) AssertToUint(value interface{}, expect uint) error {
+	v, ok := value.(float64)
+	if !ok {
+		return fmt.Errorf("Assert:%v to float failed", value)
+	}
+	if uint(v) != expect {
+		return fmt.Errorf("%v not equal:%v", value, expect)
+	}
+	return nil
+}
+
 func (this *TestFrameworkContext) AssertToBoolean(value interface{}, expect bool) error {
 	v, ok := value.(bool)
 	if !ok {
