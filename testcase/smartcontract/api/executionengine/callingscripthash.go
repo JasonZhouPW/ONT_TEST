@@ -1,15 +1,15 @@
-package smartcontract
+package executionengine
 
 import (
-. "github.com/ONT_TEST/testframework"
-"github.com/Ontology/common"
-"github.com/Ontology/core/contract"
-"github.com/Ontology/smartcontract/types"
-"time"
+	. "github.com/ONT_TEST/testframework"
+	"github.com/Ontology/common"
+	"github.com/Ontology/core/contract"
+	"github.com/Ontology/smartcontract/types"
+	"time"
 )
 
-func TestEntryScriptHash(ctx *TestFrameworkContext)bool{
-	code := "51c56b6161682953797374656d2e457865637574696f6e456e67696e652e476574456e747279536372697074486173686c766b00527ac46203006c766b00c3616c7566"
+func TestCallingScriptHash(ctx *TestFrameworkContext)bool{
+	code := "51c56b6161682b53797374656d2e457865637574696f6e456e67696e652e47657443616c6c696e67536372697074486173686c766b00527ac46203006c766b00c3616c7566"
 	c, _ := common.HexToBytes(code)
 	codeHash,_ := common.ToCodeHash(c)
 	ctx.LogInfo("CodeA: %x R:%x", codeHash, codeHash.ToArrayReverse())
@@ -18,7 +18,7 @@ func TestEntryScriptHash(ctx *TestFrameworkContext)bool{
 		code,
 		[]contract.ContractParameterType{},
 		contract.ContractParameterType(contract.ByteArray),
-		"TestEntryScriptHashA",
+		"TestCallingScriptHashA",
 		"1.0",
 		"",
 		"",
@@ -26,16 +26,16 @@ func TestEntryScriptHash(ctx *TestFrameworkContext)bool{
 		types.NEOVM,
 	)
 	if err != nil {
-		ctx.LogError("TestEntryScriptHash DeploySmartContract error:%s", err)
+		ctx.LogError("TestCallingScriptHash DeploySmartContract error:%s", err)
 		return false
 	}
 	//等待出块
 	_, err = ctx.Ont.WaitForGenerateBlock(30*time.Second, 1)
 	if err != nil {
-		ctx.LogError("TestEntryScriptHash WaitForGenerateBlock error:%s", err)
+		ctx.LogError("TestCallingScriptHash WaitForGenerateBlock error:%s", err)
 		return false
 	}
-	code = "51c56b6161671f6a437bed510b4a7d698d98ca192faa2ae634b86c766b00527ac46203006c766b00c3616c7566"
+	code = "51c56b616167aed4b6ec4c8987ff7f79af45af88a3139ed10c7d6c766b00527ac46203006c766b00c3616c7566"
 	c, _ = common.HexToBytes(code)
 	codeHash,_ = common.ToCodeHash(c)
 	ctx.LogInfo("CodeB: %x R:%x", codeHash,codeHash.ToArrayReverse())
@@ -44,7 +44,7 @@ func TestEntryScriptHash(ctx *TestFrameworkContext)bool{
 		code,
 		[]contract.ContractParameterType{},
 		contract.ContractParameterType(contract.ByteArray),
-		"TestEntryScriptHashB",
+		"TestCallingScriptHashB",
 		"1.0",
 		"",
 		"",
@@ -52,13 +52,13 @@ func TestEntryScriptHash(ctx *TestFrameworkContext)bool{
 		types.NEOVM,
 	)
 	if err != nil {
-		ctx.LogError("TestEntryScriptHash DeploySmartContract error:%s", err)
+		ctx.LogError("TestCallingScriptHash DeploySmartContract error:%s", err)
 		return false
 	}
 	//等待出块
 	_, err = ctx.Ont.WaitForGenerateBlock(30*time.Second, 1)
 	if err != nil {
-		ctx.LogError("TestEntryScriptHash WaitForGenerateBlock error:%s", err)
+		ctx.LogError("TestCallingScriptHash WaitForGenerateBlock error:%s", err)
 		return false
 	}
 
@@ -68,14 +68,15 @@ func TestEntryScriptHash(ctx *TestFrameworkContext)bool{
 		[]interface{}{},
 	)
 	if err != nil {
-		ctx.LogError("TestEntryScriptHash error:%s", err)
+		ctx.LogError("TestCallingScriptHash error:%s", err)
 		return false
 	}
 
-	ctx.LogInfo("TestEntryScriptHash res:%s", res)
+	ctx.LogInfo("TestCallingScriptHash res:%s", res)
+
 	err = ctx.AssertToByteArray(res, codeHash.ToArray())
 	if err != nil {
-		ctx.LogError("TestEntryScriptHash AssertToByteArray error:%s", err)
+		ctx.LogError("TestCallingScriptHash AssertToByteArray error:%s", err)
 		return false
 	}
 	return true
@@ -91,10 +92,10 @@ public class A : SmartContract
 {
     public static byte[] Main()
     {
-        return ExecutionEngine.EntryScriptHash;
+        return ExecutionEngine.CallingScriptHash;
     }
 }
-Code := 51c56b6161682953797374656d2e457865637574696f6e456e67696e652e476574456e747279536372697074486173686c766b00527ac46203006c766b00c3616c7566
+Code := 51c56b6161682b53797374656d2e457865637574696f6e456e67696e652e47657443616c6c696e67536372697074486173686c766b00527ac46203006c766b00c3616c7566
 ---------------------------------------------------------------
 
 using Neo.SmartContract.Framework;
@@ -104,7 +105,7 @@ using System.Numerics;
 
 public class B : SmartContract
 {
-    [Appcall("b834e62aaa2f19ca988d697d4a0b51ed7b436a1f")]
+    [Appcall("70a636aa57ab38cf9da5d47d0b6a563922904c62")]
     public static extern byte[] OtherContract();
     public static byte[] Main()
     {
@@ -112,5 +113,5 @@ public class B : SmartContract
     }
 }
 
-Code := 51c56b6161671f6a437bed510b4a7d698d98ca192faa2ae634b86c766b00527ac46203006c766b00c3616c7566
+Code := 51c56b616167aed4b6ec4c8987ff7f79af45af88a3139ed10c7d6c766b00527ac46203006c766b00c3616c7566
 */

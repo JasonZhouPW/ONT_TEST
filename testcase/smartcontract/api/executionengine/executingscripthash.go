@@ -1,4 +1,4 @@
-package smartcontract
+package executionengine
 
 import (
 	. "github.com/ONT_TEST/testframework"

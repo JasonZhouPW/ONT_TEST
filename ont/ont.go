@@ -22,6 +22,7 @@ import (
 	"github.com/Ontology/vm/neovm"
 	log4 "github.com/alecthomas/log4go"
 	"io/ioutil"
+	"math"
 	"math/big"
 	"math/rand"
 	"net/http"
@@ -497,12 +498,21 @@ func (this *Ontology) WaitForGenerateBlock(timeout time.Duration, blockCount ...
 	return ok, nil
 }
 
-func (this *Ontology) MakeAssetAmount(rawAmont float64) Fixed64 {
-	return Fixed64(rawAmont * 100000000)
+func (this *Ontology) MakeAssetAmount(rawAmont float64, precision ...byte) Fixed64 {
+	pre := byte(8)
+	if len(precision) != 0 {
+		pre = precision[0]
+	}
+
+	return Fixed64(rawAmont * math.Pow(10, float64(pre)))
 }
 
-func (this *Ontology) GetRawAssetAmount(assetAmount Fixed64) float64 {
-	return float64(assetAmount) / 100000000
+func (this *Ontology) GetRawAssetAmount(assetAmount Fixed64, precision ...byte) float64 {
+	pre := byte(8)
+	if len(precision) != 0 {
+		pre = precision[0]
+	}
+	return float64(assetAmount) / math.Pow(10, float64(pre))
 }
 
 func (this *Ontology) GetAccountProgramHash(account *account.Account) (Uint160, error) {
@@ -800,9 +810,21 @@ func (this *Ontology) InvokeSmartContractWithTx(account *account.Account, tx *tr
 			action := resp["Action"]
 			if action == ONT_HEARTBEAT {
 				continue
-			}
-			if action == ONT_SMARTCONTRACTINVOKE {
+			} else if action == ONT_SMARTCONTRACTINVOKE {
 				timer.Stop()
+				scErr, ok := resp["Error"].(float64)
+				if !ok {
+					return nil, fmt.Errorf("SmartContract Error:%v assert to float64 failed", resp["Error"])
+				}
+				if int(scErr) != DNA_ERR_OK {
+					return nil, fmt.Errorf("InvokeSmartContract failed. Error:%v Desc:%s Res:%+v", resp["Error"], resp["Desc"], resp["Result"])
+				}
+				res := resp["Result"]
+				if res == nil {
+					return nil, fmt.Errorf("InvokeSmartContract return nil")
+				}
+				return res, nil
+			} else if action == ONT_NOTIFY {
 				scErr, ok := resp["Error"].(float64)
 				if !ok {
 					return nil, fmt.Errorf("SmartContract Error:%v assert to float64 failed", resp["Error"])

@@ -1,28 +1,26 @@
 package blockchain
 
 import (
-	"time"
+	"github.com/ONT_TEST/testframework"
 	"github.com/Ontology/core/contract"
 	"github.com/Ontology/smartcontract/types"
-	"github.com/ONT_TEST/testframework"
+	"time"
 )
 
 /**
 using Neo.SmartContract.Framework;
 using Neo.SmartContract.Framework.Services.Neo;
-
 class A : SmartContract
 {
-    public static uint Main()
+    public static int Main()
     {
-        uint height = Blockchain.GetHeight();
-        return height;
+        return (int)Blockchain.GetHeight();
     }
 }
- */
+*/
 
 func TestGetCurrentHeight(ctx *testframework.TestFrameworkContext) bool {
-	code := "51C56B6168184E656F2E426C6F636B636861696E2E4765744865696768746C766B00527AC46C766B00C3616C7566"
+	code := "51c56b616168184e656f2e426c6f636b636861696e2e4765744865696768746c766b00527ac46203006c766b00c3616c7566"
 	_, err := ctx.Ont.DeploySmartContract(ctx.OntClient.Account1,
 		code,
 		[]contract.ContractParameterType{},
@@ -44,6 +42,13 @@ func TestGetCurrentHeight(ctx *testframework.TestFrameworkContext) bool {
 		ctx.LogError("TestGetCurrentHeight WaitForGenerateBlock error:%s", err)
 		return false
 	}
+
+	height, err := ctx.Ont.GetBlockCount()
+	if err != nil {
+		ctx.LogError("TestGetCurrentHeight GetBlockCount error:%s", err)
+		return false
+	}
+
 	res, err := ctx.Ont.InvokeSmartContract(
 		ctx.OntClient.Account1,
 		code,
@@ -53,11 +58,11 @@ func TestGetCurrentHeight(ctx *testframework.TestFrameworkContext) bool {
 		ctx.LogError("TestGetCurrentHeight InvokeSmartContract error:%s", err)
 		return false
 	}
-	resp, ok := res.(float64)
-	if !ok {
-		ctx.LogError("TestGetCurrentHeight result:%v assert failed.", res)
+
+	err = ctx.AssertToInt(res, int(height)-1)
+	if err != nil{
+		ctx.LogError("TestGetCurrentHeight res AssertToInt error:%s", err)
 		return false
 	}
-	ctx.LogError("TestGetCurrentHeight current height:%v ", resp)
 	return true
 }

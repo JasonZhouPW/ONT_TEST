@@ -41,6 +41,18 @@ func  TestGetReference(ctx *testframework.TestFrameworkContext)bool{
 	}
 
 	tx, err := ctx.Ont.GetTransaction(txHash)
+	txRefs := make([]*utxo.TxOutput, 0, 0)
+
+	for _, item := range tx.UTXOInputs {
+		referTx, err := ctx.Ont.GetTransaction(item.ReferTxID)
+		if err != nil {
+			ctx.LogError("GetTransaction refer txHash:%x", item.ReferTxID)
+			return false
+		}
+		ref := referTx.Outputs[item.ReferTxOutputIndex]
+		txRefs = append(txRefs, ref)
+	}
+
 	refmap, err := ctx.Ont.GetTransactionReference(tx)
 	if err != nil {
 		ctx.LogError("TestGetReference GetReference error:%s")
@@ -65,7 +77,35 @@ func  TestGetReference(ctx *testframework.TestFrameworkContext)bool{
 		return false
 	}
 
-	ctx.LogInfo("TestGetReference res:%v", res)
+	ret, ok := res.([]interface{})
+	if !ok {
+		ctx.LogError("TestGetOutputs asset res to []interface error")
+		return false
+	}
+
+	for i, item := range ret {
+		output, ok := item.([]interface{})
+		if !ok {
+			ctx.LogError("TestGetOutputs asset item to []interface error")
+			return false
+		}
+		txOutput := txRefs[i]
+		err := ctx.AssertToByteArray(output[0], txOutput.AssetID.ToArray())
+		if err != nil {
+			ctx.LogError("TestGetOutputs AssetID AssertToByteArray error:%s", err)
+			return false
+		}
+		err = ctx.AssertToByteArray(output[1], txOutput.ProgramHash.ToArray())
+		if err != nil {
+			ctx.LogError("TestGetOutputs ProgramHash AssertToByteArray error:%s", err)
+			return false
+		}
+		err = ctx.AssertToInt(output[2], int(txOutput.Value))
+		if err != nil {
+			ctx.LogError("TestGetOutputs Value AssertToInt error:%s", err)
+			return false
+		}
+	}
 	return true
 }
 

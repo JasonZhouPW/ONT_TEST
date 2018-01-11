@@ -5,5 +5,5 @@ import (
 )
 
 func TestCall() {
-	TFramework.RegTestCase("TestFnCall", TestFnCall)
+	TFramework.RegTestCase("TestCallContractStatic", TestCallContractStatic)
 }
