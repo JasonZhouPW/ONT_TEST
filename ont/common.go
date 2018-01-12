@@ -15,8 +15,7 @@ const (
 	ONT_RPC_GETBLOCKHASH        = "getblockhash"
 	ONT_RPC_GETUNSPENDOUTPUT    = "getunspendoutput"
 	ONT_RPC_GETCURRENTBLOCKHASH = "getbestblockhash"
-	ONT_RPC_GETIDENTITY         = "getidentity"
-	ONT_RPC_GETIDENTITYCLAIM    = "getidentityclaim"
+	ONT_RPC_GETBALANCE          = "getbalance"
 )
 
 const (
@@ -126,4 +125,3 @@ func (this *ONTJsonRpcRes) HandleResult() ([]byte, error) {
 	}
 	return []byte(res), nil
 }
-

@@ -1,4 +1,4 @@
-package event
+package runtime
 
 import (
 	"time"
@@ -19,21 +19,19 @@ public class HelloWorld : SmartContract
 {
     [DisplayName("transfer")]
     public static event Action<byte[], byte[], BigInteger> Transferred;
-    public static void Main(byte[] pk)
+    public static void Main(byte[] from, byte[] to, BigInteger amount)
     {
-        byte[] p1 = { 1 };
-        byte[] p2 = { 2 };
-        Transferred(p1, p2, (BigInteger)12);
+        Transferred(from, to, amount);
     }
 }
  */
 
 func TestNotify(ctx *testframework.TestFrameworkContext) bool {
-	code := "53c56b6101016c766b00527ac401026c766b51527ac453c576006c766b00c3c476516c766b51c3c476525cc46c766b52527ac46c766b52c36168124e656f2e52756e74696d652e4e6f7469667961616c7566"
+	code := "53c56b6c766b00527ac46c766b51527ac46c766b52527ac4616c766b00c36c766b51c36c766b52c3615272087472616e7366657254c168124e656f2e52756e74696d652e4e6f7469667961616c7566"
 	_, err := ctx.Ont.DeploySmartContract(ctx.OntClient.Account1,
 		code,
-		[]contract.ContractParameterType{},
-		contract.ContractParameterType(contract.ByteArray),
+		[]contract.ContractParameterType{contract.ByteArray, contract.ByteArray,contract.Integer},
+		contract.ContractParameterType(contract.Void),
 		"TestNotify",
 		"1.0",
 		"",
@@ -54,7 +52,7 @@ func TestNotify(ctx *testframework.TestFrameworkContext) bool {
 	res, err := ctx.Ont.InvokeSmartContract(
 		ctx.OntClient.Account1,
 		code,
-		[]interface{}{},
+		[]interface{}{ctx.OntClient.Account1.ProgramHash.ToArray(), ctx.OntClient.Account2.ProgramHash.ToArray(), 10},
 	)
 	if err != nil {
 		ctx.LogError("TestNotify InvokeSmartContract error:%s", err)

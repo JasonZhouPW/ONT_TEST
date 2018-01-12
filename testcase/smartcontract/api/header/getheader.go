@@ -67,7 +67,11 @@ func TestGetHeader(ctx *testframework.TestFrameworkContext) bool {
 		return false
 	}
 
-	heard := block.Blockdata
+	header := block.Blockdata
+
+	ctx.LogInfo("===>ConsensusData:%v Hash:%x Index:%v MerkleRoot:%x NextConsensus:%x PrevHash:%x Timestamp:%v Version:%v",
+		header.ConsensusData, header.Hash(), header.Height, header.TransactionsRoot, header.NextBookKeeper, header.PrevBlockHash,
+		header.Timestamp, header.Version)
 
 	res, err := ctx.Ont.InvokeSmartContract(
 		ctx.OntClient.Account1,
@@ -91,44 +95,44 @@ func TestGetHeader(ctx *testframework.TestFrameworkContext) bool {
 	//	return false
 	//}
 
-	hash := heard.Hash()
+	hash := header.Hash()
 	err = ctx.AssertToByteArray(ret[1], hash.ToArray())
 	if err != nil {
 		ctx.LogError("TestGetHeader Hash AssertToByteArray error:%s", err)
 		return false
 	}
 
-	err = ctx.AssertToInt(ret[2], int(heard.Height))
+	err = ctx.AssertToInt(ret[2], int(header.Height))
 	if err != nil {
 		ctx.LogError("TestGetHeader Height AssertToInt error:%s", err)
 		return false
 	}
 
-	err = ctx.AssertToByteArray(ret[3], heard.TransactionsRoot.ToArray())
+	err = ctx.AssertToByteArray(ret[3], header.TransactionsRoot.ToArray())
 	if err != nil {
 		ctx.LogError("TestGetHeader TransactionsRoot AssertToByteArray error:%s", err)
 		return false
 	}
 
-	err = ctx.AssertToByteArray(ret[4], heard.NextBookKeeper.ToArray())
+	err = ctx.AssertToByteArray(ret[4], header.NextBookKeeper.ToArray())
 	if err != nil {
 		ctx.LogError("TestGetHeader NextBookKeeper AssertToByteArray error:%s", err)
 		return false
 	}
 
-	err = ctx.AssertToByteArray(ret[5], heard.PrevBlockHash.ToArray())
+	err = ctx.AssertToByteArray(ret[5], header.PrevBlockHash.ToArray())
 	if err != nil {
 		ctx.LogError("TestGetHeader PrevBlockHash AssertToByteArray error:%s", err)
 		return false
 	}
 
-	err = ctx.AssertToInt(ret[6], int(heard.Timestamp))
+	err = ctx.AssertToInt(ret[6], int(header.Timestamp))
 	if err != nil {
 		ctx.LogError("TestGetHeader Timestamp AssertToInt error:%s", err)
 		return false
 	}
 
-	err = ctx.AssertToInt(ret[7], int(heard.Version))
+	err = ctx.AssertToInt(ret[7], int(header.Version))
 	if err != nil {
 		ctx.LogError("TestGetHeader Version AssertToInt error:%s", err)
 		return false
