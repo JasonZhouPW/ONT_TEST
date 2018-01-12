@@ -2,41 +2,41 @@ package api
 
 import (
 	. "github.com/ONT_TEST/testframework"
-	//"github.com/ONT_TEST/testcase/executionengine/api/header"
-	//"github.com/ONT_TEST/testcase/executionengine/api/block"
-	//"github.com/ONT_TEST/testcase/executionengine/api/account"
-	//"github.com/ONT_TEST/testcase/executionengine/api/asset"
-	//"github.com/ONT_TEST/testcase/executionengine/api/attribute"
-	//"github.com/ONT_TEST/testcase/executionengine/api/input"
-	//"github.com/ONT_TEST/testcase/executionengine/api/blockchain"
-	//"github.com/ONT_TEST/testcase/executionengine/api/account"
-	//"github.com/ONT_TEST/testcase/executionengine/api/executionengine"
-	//"github.com/ONT_TEST/testcase/executionengine/api/transaction"
-	//"github.com/ONT_TEST/testcase/executionengine/api/block"
-	//"github.com/ONT_TEST/testcase/executionengine/api/blockchain"
-	//"github.com/ONT_TEST/testcase/executionengine/api/header"
-	//"github.com/ONT_TEST/testcase/executionengine/api/blockchain"
-	//"github.com/ONT_TEST/testcase/executionengine/api/header"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/header"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/block"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/account"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/asset"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/attribute"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/input"
 	//"github.com/ONT_TEST/testcase/smartcontract/api/blockchain"
-	"github.com/ONT_TEST/testcase/smartcontract/api/event"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/account"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/executionengine"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/transaction"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/block"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/blockchain"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/header"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/blockchain"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/header"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/blockchain"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/runtime"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/blockchain"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/blockchain"
+	"github.com/ONT_TEST/testcase/smartcontract/api/header"
+	//"github.com/ONT_TEST/testcase/smartcontract/api/block"
 )
 
 func TestAPI() {
 	//blockchain
 	//TFramework.RegTestCase("TestGetCurrentHeight", blockchain.TestGetCurrentHeight)
-	//TFramework.RegTestCase("TestGetHeader", blockchain.TestGetHeader)
 	//TFramework.RegTestCase("TestGetBlock", blockchain.TestGetBlock)
-	//TFramework.RegTestCase("TestGetTransaction", blockchain.TestGetTransaction)
 	//TFramework.RegTestCase("TestGetContract", blockchain.TestGetContract)
 	//TFramework.RegTestCase("TestValidators", blockchain.TestValidators)
 
 	//header
-	//TFramework.RegTestCase("TestGetHeader", header.TestGetHeader)
+	TFramework.RegTestCase("TestGetHeader", header.TestGetHeader)
 
 	//block
-	//TFramework.RegTestCase("TestGetBlockTransctionCount", block.TestGetBlockTransctionCount)
 	//TFramework.RegTestCase("TestGetBlockTransactions", block.TestGetBlockTransactions)
-	//TFramework.RegTestCase("TestGetBlockTransaction", block.TestGetBlockTransaction)
 
 	//account
 	//TFramework.RegTestCase("TestGetBalance", account.TestGetBalance)
@@ -47,15 +47,11 @@ func TestAPI() {
 	//TFramework.RegTestCase("TestAsset", asset.TestAsset)
 	//TFramework.RegTestCase("TestRenew", asset.TestRenew)
 
-	//attribute
-	//TFramework.RegTestCase("TestGetAttributeData", attribute.TestGetAttributeData)
 
 	//inputs
 	//TFramework.RegTestCase("TestGetInputHash", input.TestGetInputHash)
-	TFramework.RegTestCase("TestLog", event.TestLog)
-	TFramework.RegTestCase("TestNotify", event.TestNotify)
-
-
+	//TFramework.RegTestCase("TestLog", event.TestLog)
+	//TFramework.RegTestCase("TestNotify", runtime.TestNotify)
 
 	//triggetype
 	//TFramework.RegTestCase("TestTriggerType",executionengine.TestTriggerType)

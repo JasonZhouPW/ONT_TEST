@@ -155,6 +155,19 @@ func (this *Ontology) GetBlockCount() (uint32, error) {
 	return count, nil
 }
 
+func(this *Ontology) GetBalance(address string, assetId Uint256)(Fixed64, error){
+	data, err := this.sendRpcRequest(ONT_RPC_GETBALANCE, []interface{}{address, hex.EncodeToString(assetId.ToArray())})
+	if err != nil {
+		return 0, fmt.Errorf("sendRpcRequest error:%s", err)
+	}
+	balance := Fixed64(0)
+	err = json.Unmarshal(data, &balance)
+	if err != nil {
+		return 0, fmt.Errorf("json.Unmarshal Balance:%s error:%s", data, err)
+	}
+	return balance, nil
+}
+
 func (this *Ontology) NewAssetRegisterTransaction(asset *asset.Asset,
 	amount Fixed64,
 	issuer,
