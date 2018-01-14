@@ -39,6 +39,10 @@ func TestGetAttributes(ctx *testframework.TestFrameworkContext) bool {
 	}
 
 	tx, err := ctx.Ont.GetTransaction(txHash)
+	if err != nil {
+		ctx.LogError("TestGetAttributes GetTransaction error:%s", err)
+		return false
+	}
 	txAttrs := tx.Attributes
 	d, _ := json.Marshal(txAttrs)
 	ctx.LogInfo("TestGetAttributes Attributes:%s", d)

@@ -28,7 +28,6 @@ func TestGetBalance(ctx *testframework.TestFrameworkContext) bool {
 		ctx.LogError("TestGetBalance InitAsset error:%s", err)
 		return false
 	}
-
 	code := "54c56b6c766b00527ac46c766b51527ac4616c766b00c36168194e656f2e426c6f636b636861696e2e4765744163636f756e746c766b52527ac46c766b52c36c766b51c3617c68164e656f2e4163636f756e742e47657442616c616e63656c766b53527ac46203006c766b53c3616c7566"
 	_, err = ctx.Ont.DeploySmartContract(ctx.OntClient.Account1,
 		code,

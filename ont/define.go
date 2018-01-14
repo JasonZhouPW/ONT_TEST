@@ -24,6 +24,8 @@ type BlockHead struct {
 	NextBookKeeper   string
 	Program          ProgramInfo
 	Hash             string
+	BlockRoot        string
+	StateRoot        string
 }
 
 type TxAttributeInfo struct {

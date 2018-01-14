@@ -51,6 +51,7 @@ func testAsString(ctx *testframework.TestFrameworkContext , code string, input [
 		ctx.LogError("TestAsString InvokeSmartContract error:%s", err)
 		return false
 	}
+
 	err = ctx.AssertToString(res, string(input))
 	if err != nil {
 		ctx.LogError("TestAsString test failed %s", err)

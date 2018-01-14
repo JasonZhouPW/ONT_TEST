@@ -8,7 +8,7 @@ import (
 )
 
 func TestAsByteArrayString(ctx *testframework.TestFrameworkContext) bool {
-	code := "51C56B6C766B00527AC46C766B00C3616C7566"
+	code := "51C56B6C766B00527AC46C766B00C3616C756600"
 	_, err := ctx.Ont.DeploySmartContract(ctx.OntClient.Account1,
 		code,
 		[]contract.ContractParameterType{contract.String},
