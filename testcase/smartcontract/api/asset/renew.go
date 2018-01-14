@@ -53,7 +53,7 @@ func TestRenew(ctx *testframework.TestFrameworkContext) bool {
 		return false
 	}
 
-	blockNumOneYear := 2000000
+	blockNumOneYear := 4000000
 	err = ctx.AssertToInt(res, (years * blockNumOneYear) + int(height-1))
 	if err != nil {
 		ctx.LogError("TestRenew test failed %s", err)

@@ -1,6 +1,5 @@
 package blockchain
 
-
 import (
 	"time"
 	"github.com/Ontology/core/contract"
@@ -62,17 +61,77 @@ func TestGetBlock(ctx *testframework.TestFrameworkContext) bool {
 	}
 
 	height -= 1
+	block, err := ctx.Ont.GetBlockByHeight(height)
+	if err != nil {
+		ctx.LogError("TestGetBlock GetBlockByHeight error:%s", err)
+		return false
+	}
+
+	header := block.Blockdata
 	res, err := ctx.Ont.InvokeSmartContract(
 		ctx.OntClient.Account1,
 		code,
-		[]interface{}{height},
+		[]interface{}{int(height)},
 	)
 	if err != nil {
 		ctx.LogError("TestGetBlock InvokeSmartContract error:%s", err)
 		return false
 	}
 
-	ctx.LogError("TestGetBlock res:%s", res)
+	ret, ok := res.([]interface{})
+	if !ok {
+		ctx.LogError("TestGetBlock asset ret to []interface{} failed")
+		return false
+	}
+
+	//err = ctx.AssertToUint(ret[0], uint(heard.ConsensusData))
+	//if err != nil {
+	//	ctx.LogError("TestGetBlock consensusData AssertToUint error:%s", err)
+	//	return false
+	//}
+
+	hash := header.Hash()
+	err = ctx.AssertToByteArray(ret[1], hash.ToArray())
+	if err != nil {
+		ctx.LogError("TestGetBlock Hash AssertToByteArray error:%s", err)
+		return false
+	}
+
+	err = ctx.AssertToInt(ret[2], int(header.Height))
+	if err != nil {
+		ctx.LogError("TestGetBlock Height AssertToInt error:%s", err)
+		return false
+	}
+
+	err = ctx.AssertToByteArray(ret[3], header.TransactionsRoot.ToArray())
+	if err != nil {
+		ctx.LogError("TestGetBlock TransactionsRoot AssertToByteArray error:%s", err)
+		return false
+	}
+
+	err = ctx.AssertToByteArray(ret[4], header.NextBookKeeper.ToArray())
+	if err != nil {
+		ctx.LogError("TestGetBlock NextBookKeeper AssertToByteArray error:%s", err)
+		return false
+	}
+
+	err = ctx.AssertToByteArray(ret[5], header.PrevBlockHash.ToArray())
+	if err != nil {
+		ctx.LogError("TestGetBlock PrevBlockHash AssertToByteArray error:%s", err)
+		return false
+	}
+
+	err = ctx.AssertToInt(ret[6], int(header.Timestamp))
+	if err != nil {
+		ctx.LogError("TestGetBlock Timestamp AssertToInt error:%s", err)
+		return false
+	}
+
+	err = ctx.AssertToInt(ret[7], int(header.Version))
+	if err != nil {
+		ctx.LogError("TestGetBlock Version AssertToInt error:%s", err)
+		return false
+	}
 
 	return true
 }
